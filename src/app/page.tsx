@@ -3,7 +3,7 @@ export default function Home() {
     <div className="w-full h-full relative bg-white">
       <div>
         <h1 className="font-extrabold text-8xl text-center text-black pt-20">
-          Rainy Words
+          Rainy Words!
         </h1>
       </div>
       <div className="flex flex-col items-center justify-center py-16">
