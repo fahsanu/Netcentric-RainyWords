@@ -1,10 +1,37 @@
 const express = require('express');
-const app = express();
+const http = require('http');
+const socketIo = require('socket.io');
 
-app.get('/api', (req, res) => {
-    res.json({ "users": ["userOne", "userTwo", "userThree" ] })
+// Create an Express app and an HTTP server
+const app = express();
+const server = http.createServer(app);
+
+// Create a Socket.io server by passing the HTTP server
+const io = socketIo(server);
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/serverTest.html'); 
 });
 
-app.listen(9000, () => {
-    console.log('Server is running on port 9000...')
+// Handle incoming socket connections
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Handle messages from clients
+  socket.on('message', (message) => {
+    console.log('Received message:', message);
+
+    // Broadcast the message to all connected clients
+    io.emit('message', message);
+  });
+
+  // Handle disconnects
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
