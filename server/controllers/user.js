@@ -8,20 +8,19 @@ async function check_user(req) {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
-        console.log(req.body)
 
-        if (!req || !req.user_name) {
-            return { status: false, message: 'require user_name'}
+        if (!req || !req.name) {
+            return { status: false, message: "Require username"}
         }
 
-        const existing_user = await col.findOne({ user_name: req.user_name });
+        const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
 
         if (existing_user) {
             return existing_user
         } else {
             const newUser = {
-                user_name: req.user_name,
-                user_id: uuidv4()
+                name: req.name,
+                id: uuidv4()
             } 
         
         await col.insertOne(newUser);
@@ -33,4 +32,32 @@ async function check_user(req) {
     }
 }
 
-module.exports = { check_user }
+async function add_score(req) {
+    try {
+        const database = client.db('usersDB');
+        const col = database.collection('user');
+
+        const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
+        console.log(existing_user)
+
+        if (existing_user) {
+            const update_score = await col.updateOne(
+                { "name" : req.name },
+                { $set: { "score" : req.score } })
+
+            if (update_score.modifiedCount === 1) {
+                return { status: true, message: "Score updated successfully" };
+            } else {
+                return { status: false, message: "Score update failed" };
+            }
+            
+        } else {
+            return { status: false, message: "Create the user first"}
+        };
+    }
+    catch (error) {
+        return { status: false, result: error}
+    }
+}
+
+module.exports = { check_user, add_score }
