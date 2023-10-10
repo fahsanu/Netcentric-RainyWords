@@ -13,6 +13,16 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/serverTest.html'); 
 });
 
+const words_routes = require('./routes/words.route');
+const user_routes = require('./routes/user.route');
+
+app.get('/api', (req, res) => {
+    res.json({status: true, message: "API is running"});
+})
+
+app.use('/words', words_routes)
+app.use('/user', user_routes);
+
 // Handle incoming socket connections
 io.on('connection', (socket) => {
   console.log('A user connected');
