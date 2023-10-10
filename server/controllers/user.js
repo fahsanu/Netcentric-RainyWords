@@ -60,4 +60,26 @@ async function add_score(req) {
     }
 }
 
-module.exports = { check_user, add_score }
+async function get_top_five() {
+    try {
+        const database = client.db('usersDB');
+        const col = database.collection('user');
+
+        const userCount = await col.countDocuments();
+        console.log(userCount)
+
+        if (userCount < 5) {
+            const top_users = await col.find({ score: { $exists: true } }).sort({ score: -1 }).toArray();
+            return top_users;
+        } else {
+            const topFive_users = await col.find().sort({ score: -1 }).limit(5).toArray();
+            return topFive_users;
+        }
+
+    }
+    catch (error) {
+        return { status: false, result: error}
+    }
+}
+
+module.exports = { check_user, add_score, get_top_five }
