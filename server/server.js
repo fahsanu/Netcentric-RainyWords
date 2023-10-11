@@ -30,18 +30,15 @@ io.on('connection', (socket) => {
   console.log('A user connected');
 
   socket.on('message', (message) => {
-    console.log('Received message:', message);
+    console.log('Received message from client:', message);
 
     io.emit('message', message);
   });
 
+  socket.emit('message', 'Hello from the server!');
 
   socket.on('disconnect', () => {
     console.log('A user disconnected');
-  });
-
-  socket.on('message', (message) => {
-    console.log('Received message from client:', message);
   });
 
 });
