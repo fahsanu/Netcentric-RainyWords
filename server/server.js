@@ -2,12 +2,10 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
+const path = require('path');
 
-// Create an Express app and an HTTP server
 const app = express();
 const server = http.createServer(app);
-
-// Create a Socket.io server by passing the HTTP server
 const io = socketIo(server);
 
 app.use(cors())
@@ -28,22 +26,24 @@ app.get('/api', (req, res) => {
 app.use('/words', words_routes)
 app.use('/user', user_routes);
 
-// Handle incoming socket connections
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  // Handle messages from clients
   socket.on('message', (message) => {
     console.log('Received message:', message);
 
-    // Broadcast the message to all connected clients
     io.emit('message', message);
   });
 
-  // Handle disconnects
+
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
+
+  socket.on('message', (message) => {
+    console.log('Received message from client:', message);
+  });
+
 });
 
 const PORT = process.env.PORT || 4000;
@@ -52,5 +52,5 @@ server.listen(PORT, () => {
 });
 
 app.get('/client.js', (req, res) => {
-  res.sendFile(__dirname + '/client.js');
+  res.sendFile(path.join(__dirname, '/../client/client.js'));
 });
