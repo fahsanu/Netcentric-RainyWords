@@ -49,6 +49,9 @@
   .font-outline-4 {
     -webkit-text-stroke: 4px black;
   }
+  .font-outline-6 {
+    -webkit-text-stroke: 6px black;
+  }
 }
 
 body {
