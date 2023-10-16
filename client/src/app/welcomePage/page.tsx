@@ -5,9 +5,10 @@ import Button from "./button";
 
 function WelcomePage() {
   const [active, setActive] = React.useState<number | null>(null);
-  const handleClick = (buttonId: number, path: string) => {
+  const handleClick = (buttonId: number, mode: string) => {
     setActive(buttonId);
-    const url=`/words/${path}`;
+    const key={mode};
+    console.log(mode);
   }
 
   return (
@@ -30,21 +31,21 @@ function WelcomePage() {
           <Button
             onClick={() => handleClick(1, "easy")}
             isActive={active === 1}
-            path="easy"
+            mode="easy"
           >
             Easy
           </Button>
           <Button
             onClick={() => handleClick(2, "medium")}
             isActive={active === 2}
-            path="medium"
+            mode="medium"
           >
             Medium
           </Button>
           <Button
             onClick={() => handleClick(3, "hard")}
             isActive={active === 3}
-            path="hard"
+            mode="hard"
           >
             Hard
           </Button>
