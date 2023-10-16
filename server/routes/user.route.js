@@ -1,5 +1,5 @@
 const route = require('express').Router();
-const { check_user, add_score, get_top_five } = require('../controllers/user');
+const { check_user, add_score, get_top_three } = require('../controllers/user');
 
 route.post('/check', async (req, res) => {
     try {
@@ -21,9 +21,9 @@ route.put('/add_score', async (req, res) => {
     }
 })
 
-route.get('/top_five', async (req, res) => {
+route.get('/top_three', async (req, res) => {
     try {
-        const _out = await get_top_five();
+        const _out = await get_top_three();
         console.log(_out)
         return res.json(_out);
     } catch(error) {
