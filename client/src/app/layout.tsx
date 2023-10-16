@@ -1,7 +1,18 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Dela_Gothic_One, Poppins } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+
+const delaGothicOne = Dela_Gothic_One({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-delagothic',
+})
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-poppins',
+})
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${delaGothicOne.variable} ${poppins.variable}`}>{children}</body>
     </html>
   )
 }
