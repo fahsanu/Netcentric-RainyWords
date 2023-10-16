@@ -74,7 +74,6 @@ async function get_top_three() {
             return top_users;
         } else {
             const topThree_users = await col.find().sort({ score: -1 }).limit(3).toArray();
-            console.log(topThree_users)
             return topThree_users;
         }
 
