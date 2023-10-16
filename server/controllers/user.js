@@ -20,7 +20,8 @@ async function check_user(req) {
         } else {
             const newUser = {
                 name: req.name,
-                id: uuidv4()
+                id: uuidv4(),
+                score: 0
             } 
         
         await col.insertOne(newUser);
@@ -60,7 +61,7 @@ async function add_score(req) {
     }
 }
 
-async function get_top_five() {
+async function get_top_three() {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
@@ -68,12 +69,13 @@ async function get_top_five() {
         const userCount = await col.countDocuments();
         console.log(userCount)
 
-        if (userCount < 5) {
+        if (userCount < 3) {
             const top_users = await col.find({ score: { $exists: true } }).sort({ score: -1 }).toArray();
             return top_users;
         } else {
-            const topFive_users = await col.find().sort({ score: -1 }).limit(5).toArray();
-            return topFive_users;
+            const topThree_users = await col.find().sort({ score: -1 }).limit(3).toArray();
+            console.log(topThree_users)
+            return topThree_users;
         }
 
     }
@@ -82,4 +84,4 @@ async function get_top_five() {
     }
 }
 
-module.exports = { check_user, add_score, get_top_five }
+module.exports = { check_user, add_score, get_top_three }

@@ -2,12 +2,10 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
+const path = require('path');
 
-// Create an Express app and an HTTP server
 const app = express();
 const server = http.createServer(app);
-
-// Create a Socket.io server by passing the HTTP server
 const io = socketIo(server);
 
 app.use(cors())
@@ -22,35 +20,35 @@ const words_routes = require('./routes/words.route');
 const user_routes = require('./routes/user.route');
 
 app.get('/api', (res) => {
-    res.json({status: true, message: "API is running"});
+    res.send({status: true, message: "API is running"});
 })
 
 app.use('/words', words_routes)
 app.use('/user', user_routes);
 
-// Handle incoming socket connections
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  // Handle messages from clients
   socket.on('message', (message) => {
-    console.log('Received message:', message);
+    console.log('Received message from client:', message);
 
-    // Broadcast the message to all connected clients
-    socket.emit('message', { message: 'Hello from the server!'} );
+    io.emit('message', message);
   });
 
-  // Handle disconnects
+  socket.emit('message', 'Hello from the server!');
+
   socket.on('disconnect', () => {
     console.log('A user disconnected');
   });
+
 });
 
-const PORT = 4000;
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const PORT = 3000;  // Use the port you want to use for your server
+const SERVER_IP = "10.202.139.216";
+server.listen(PORT, SERVER_IP, () => {
+  console.log(`Server is running at http://${SERVER_IP}:${PORT}`);
 });
 
 app.get('/client.js', (req, res) => {
-  res.sendFile(__dirname + '/client.js');
+  res.sendFile(path.join(__dirname, '/../client/client.js'));
 });
