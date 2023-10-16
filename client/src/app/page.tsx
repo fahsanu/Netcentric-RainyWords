@@ -1,9 +1,21 @@
 'use client'
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Home(props: string) {
-  const [user, setUser] = useState("");
+  const [username, setUsername] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('/user', { username });
+      router.push(`/user/check/${response.data.username}`);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
@@ -21,14 +33,19 @@ export default function Home(props: string) {
             Please enter your nickname
           </p>
           <div className="flex flex-col items-center justify-center pt-3 pb-20">
-            <input className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"></input>
+            <input 
+              className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            >
+            </input>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center pt-5 pb-10">
           <button
             className="px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
             type="button"
-            onClick={() => setUser(user)}
+            onClick={handleSubmit}
           >
             <Link href="/welcomePage">ENTER</Link>
           </button>
