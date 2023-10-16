@@ -4,6 +4,13 @@ import { Dela_Gothic_One, Poppins } from "next/font/google";
 const DeldaGothicOne = Dela_Gothic_One({
   subsets: ["latin"],
   weight: "400",
+  variable: "--font-delagothic",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-poppins",
 });
 
 export const metadata = {
@@ -18,7 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={DeldaGothicOne.className}>{children}</body>
+      <body className={`${DeldaGothicOne.variable} ${poppins.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }
