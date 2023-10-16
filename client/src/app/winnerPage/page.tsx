@@ -7,7 +7,7 @@ import Youloose from "../loserPage/youloose";
 export default function Winner() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">
-      {/* <Confetti width={window.outerWidth} /> */}
+      <Confetti width={window.outerWidth} />
       <div className="w-full bg-slate-400 py-">
         <h1 className="text-9xl justify-center tracking-tighter font-bold pt-12 font-outline-2 top-24 text-center text-stone-300">
           RainyWords
