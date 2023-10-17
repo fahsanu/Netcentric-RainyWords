@@ -1,18 +1,20 @@
 'use client'
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useUser } from "./UserInput/UserContext";
 
-export default function Home(props: string) {
-  const [username, setUsername] = useState("");
-  const router = useRouter();
+export default function Home() {
+  const { username, setUsername } = useUser();
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
 
   const handleSubmit = async () => {
-    console.log(username)
     try {
-      const response = await axios.post('/user', { username });
-      router.push(`/user/${response.data.username}`);
+      // const response = await axios.post('/user', { username });
+      // router.push(`/user/${response.data.username}`);
       console.log(username)
     } catch (error) {
       console.log(error)
@@ -39,7 +41,7 @@ export default function Home(props: string) {
             <input 
               className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleUsernameChange}
             >
             </input>
           </div>

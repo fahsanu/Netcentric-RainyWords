@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Button from "./button";
-import { useSearchParams } from "next/navigation";
+import { useUser } from "../UserInput/UserContext";
 
 function WelcomePage() {
   const [active, setActive] = React.useState<number | null>(null);
@@ -12,8 +12,7 @@ function WelcomePage() {
     console.log(mode);
   }
 
-  const searchParams = useSearchParams();
-  const username = searchParams.get('username');
+  const { username } = useUser();
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
