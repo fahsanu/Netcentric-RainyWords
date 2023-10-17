@@ -9,12 +9,15 @@ export default function Home(props: string) {
   const router = useRouter();
 
   const handleSubmit = async () => {
+    console.log(username)
     try {
       const response = await axios.post('/user', { username });
-      router.push(`/user/check/${response.data.username}`);
+      router.push(`/user/${response.data.username}`);
+      console.log(username)
     } catch (error) {
       console.log(error)
     }
+  
   }
 
   return (

@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Button from "./button";
+import { useSearchParams } from "next/navigation";
 
 function WelcomePage() {
   const [active, setActive] = React.useState<number | null>(null);
@@ -10,6 +11,9 @@ function WelcomePage() {
     const key={mode};
     console.log(mode);
   }
+
+  const searchParams = useSearchParams();
+  const username = searchParams.get('username');
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
@@ -24,7 +28,7 @@ function WelcomePage() {
       <div className="flex flex-col items-center justify-center py-16">
         <div className="w-2/3 border-2 border-black bg-slate-500">
           <h1 className="text-center text-stone-300 font-outline-4 text-7xl py-20">
-            Welcome,
+            Welcome, {username}
           </h1>
         </div>
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
