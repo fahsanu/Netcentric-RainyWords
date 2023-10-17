@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useUser } from "./UserInput/UserContext";
+import router from "next/router";
 
 export default function Home() {
   const { username, setUsername } = useUser();
@@ -13,9 +14,9 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      // const response = await axios.post('/user', { username });
-      // router.push(`/user/${response.data.username}`);
-      console.log(username)
+      const response = await axios.post('/user/check', { username });
+      router.push(`/user/check/${response.data.username}`);
+      console.log(`username: ${username}`)
     } catch (error) {
       console.log(error)
     }
