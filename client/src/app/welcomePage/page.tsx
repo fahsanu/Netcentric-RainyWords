@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Button from "./button";
+import io from "socket.io-client";
 
 function WelcomePage() {
   const [active, setActive] = React.useState<number | null>(null);
@@ -9,6 +10,7 @@ function WelcomePage() {
     setActive(buttonId);
     const url=`/words/${path}`;
   }
+  const socket = io("http://localhost:4000/welcomePage");
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
