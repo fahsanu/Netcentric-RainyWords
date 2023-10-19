@@ -8,7 +8,7 @@ async function get_easy_words() {
         const database = client.db('wordsDB');
         const col = database.collection('easy');
 
-        const words = await col.aggregate([ { $sample: { size: 500 } }, { $project: { _id: 0 } }]).toArray();
+        const words = await col.aggregate([ { $sample: { size: 1 } }, { $project: { _id: 0 } }]).toArray();
 
         return words;
     }
