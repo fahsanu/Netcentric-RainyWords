@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import io from "socket.io-client";
 
 export default function LandingPage() {
   const [countdown, setCountdown] = useState(3);
@@ -18,6 +19,8 @@ export default function LandingPage() {
       clearInterval(timer);
     };
   }, [countdown]);
+
+  const socket = io();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">
