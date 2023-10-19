@@ -1,8 +1,9 @@
 'use client'
 import React from "react";
+import { useEffect, useState } from 'react';
 import Link from "next/link";
 import Button from "./button";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 function WelcomePage() {
   const [active, setActive] = React.useState<number | null>(null);
@@ -10,7 +11,19 @@ function WelcomePage() {
     setActive(buttonId);
     const url=`/words/${path}`;
   }
-  const socket = io("http://localhost:4000/welcomePage");
+
+  const socket = io("http://localhost:4000/welcomePage", { transports : ['websocket'] });
+  const [connectedClients, setConnectedClients] = useState(0);
+
+  useEffect(() => {
+    socket.on('updateConnectedClients', (count) => {
+      setConnectedClients(count);
+    });
+  }, []);
+
+  const handleWaitingPage = () => {
+    socket.emit('startCountdown');
+  };
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
@@ -55,8 +68,9 @@ function WelcomePage() {
           <button
             className="px-20 py-4 text-black text-4xl font-bold bg-stone-300 border-4 border-black hover:bg-amber-300"
             type="button"
+            onClick={handleWaitingPage}
           >
-            <Link href="/matchPage">START</Link>
+            <Link href="/waitingPage">START</Link>
           </button>
         </div>
       </div>

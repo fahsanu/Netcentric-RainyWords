@@ -1,11 +1,11 @@
 'use client'
 import Link from "next/link";
 import React, { useState } from "react";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 export default function Home(props: string) {
   const [user, setUser] = useState("");
-  const socket = io("http://localhost:4000/");
+  const socket = io("http://localhost:4000/", { transports : ['websocket'] });
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">

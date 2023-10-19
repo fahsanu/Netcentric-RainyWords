@@ -9,7 +9,7 @@ const server = createServer(app);
 const io = new Server(server);
 
 
-//API route
+//API route -------------------------------------------------
 app.use(cors())
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -24,46 +24,23 @@ app.get('/api', (res) => {
 app.use('/words', words_routes)
 app.use('/user', user_routes);
 
-//install middleware
+//Install middleware
 app.use(cors({ origin: 'http://localhost:3000' }));
 
-//Sockets server
+//Sockets -------------------------------------------------
 app.get('/', (res) => {
   res.sendFile(join(__dirname + 'page.tsx')); 
 });
 
-io.on('connection', (socket) => {
-  console.log('User connected mainPage');
+const mainPageSockets = require('./sockets/mainPage')
+const welcomePageSockets = require('./sockets/welcomePage')
+const waitingPageSockets = require('./sockets/waitingPage')
 
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
+mainPageSockets(io);
+welcomePageSockets(io);
+waitingPageSockets(io);
 
-  let connectedClients = 0;
-  socket.on('join-game', () => {
-    connectedClients++;
-    if (connectedClients === 2) {
-      io.emit('start-game');
-    }
-  })
-
-});
-
-io.of('/welcomePage').on('connection', (socket) => {
-  console.log('User connected welcomePage');
-
-});
-
-io.of('/matchPage').on('connection', (socket) => {
-  console.log('User connected welcomePage');
-
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
-  });
-});
-
-//Run Server
+//Run Server -------------------------------------------------
 const PORT = 4000; 
 const SERVER_IP = "localhost"; //fahfhi's hotspot 172.20.10.4
 server.listen(PORT, SERVER_IP, () => {
