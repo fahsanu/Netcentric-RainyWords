@@ -2,9 +2,27 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { io } from "socket.io-client";
+import { useUser } from "./UserInput/UserContext";
+import router from "next/router";
+import axios from "axios";
 
-export default function Home(props: string) {
-  const [user, setUser] = useState("");
+export default function Home() {
+  const { username, setUsername } = useUser();
+
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('/user/check', { username });
+      router.push(`/user/check/${response.data.username}`);
+      console.log(`username: ${username}`)
+    } catch (error) {
+      console.log(error)
+    }
+  
+  }
   const socket = io("http://172.20.10.4:4000/", { transports : ['websocket'] });
 
   return (
@@ -23,14 +41,17 @@ export default function Home(props: string) {
             Please enter your nickname
           </p>
           <div className="flex flex-col items-center justify-center pt-3 pb-20">
-            <input className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"></input>
+            <input className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"
+            value={username}
+            onChange={handleUsernameChange}
+            ></input>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center pt-5 pb-10">
           <button
             className="px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
             type="button"
-            onClick={() => setUser(user)}
+            onClick={handleSubmit}
           >
             <Link href="/welcomePage">ENTER</Link>
           </button>
