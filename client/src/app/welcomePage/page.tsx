@@ -1,14 +1,33 @@
 'use client'
 import React from "react";
+import { useEffect, useState } from 'react';
 import Link from "next/link";
 import Button from "./button";
+import { io } from "socket.io-client";
+import { useUser } from "../UserInput/UserContext";
 
 function WelcomePage() {
   const [active, setActive] = React.useState<number | null>(null);
-  const handleClick = (buttonId: number, path: string) => {
+  const handleClick = (buttonId: number, mode: string) => {
     setActive(buttonId);
-    const url=`/words/${path}`;
+    const key={mode};
+    console.log(mode);
   }
+
+  const { username } = useUser();
+
+  const socket = io("http://172.20.10.4:4000/welcomePage", { transports : ['websocket'] });
+  const [connectedClients, setConnectedClients] = useState(0);
+
+  useEffect(() => {
+    socket.on('updateConnectedClients', (count) => {
+      setConnectedClients(count);
+    });
+  }, []);
+
+  const handleWaitingPage = () => {
+    socket.emit('startCountdown');
+  };
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
@@ -23,28 +42,28 @@ function WelcomePage() {
       <div className="flex flex-col items-center justify-center py-16">
         <div className="w-2/3 border-2 border-black bg-slate-500">
           <h1 className="text-center text-stone-300 font-outline-4 text-7xl py-20">
-            Welcome,
+            Welcome, {username}
           </h1>
         </div>
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
             onClick={() => handleClick(1, "easy")}
             isActive={active === 1}
-            path="easy"
+            mode="easy"
           >
             Easy
           </Button>
           <Button
             onClick={() => handleClick(2, "medium")}
             isActive={active === 2}
-            path="medium"
+            mode="medium"
           >
             Medium
           </Button>
           <Button
             onClick={() => handleClick(3, "hard")}
             isActive={active === 3}
-            path="hard"
+            mode="hard"
           >
             Hard
           </Button>
@@ -53,8 +72,9 @@ function WelcomePage() {
           <button
             className="px-20 py-4 text-black text-4xl font-bold bg-stone-300 border-4 border-black hover:bg-amber-300"
             type="button"
+            onClick={handleWaitingPage}
           >
-            <Link href="/matchPage">START</Link>
+            <Link href="/waitingPage">START</Link>
           </button>
         </div>
       </div>

@@ -3,7 +3,7 @@ import React from 'react';
 type ButtonProps = {
     onClick: () => void;
     isActive: boolean;
-    path: string;
+    mode: string;
     children: React.ReactNode;
   };
   
