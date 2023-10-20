@@ -23,7 +23,7 @@ export default function Home() {
     }
   
   }
-  const socket = io("http://172.20.10.4:4000/", { transports : ['websocket'] });
+  const socket = io("http://localhost:4000/", { transports : ['websocket'] });
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
