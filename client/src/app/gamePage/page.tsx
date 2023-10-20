@@ -15,10 +15,10 @@ export default function gamePage() {
       <div className="w-full h-screen flex justify-center">
         <div className="relative justify-self-center w-10/12 h-2/4 bg-slate-500 border-4 border-black pt-10">
           <h1 className="absolute text-stone-300 text-3xl top-2 left-5">
-            Player1 #
+            Name : #
           </h1>
           <h1 className="absolute text-stone-300 text-3xl top-2 right-5">
-            Player2 #
+            # : Name
           </h1>
         </div>
         <div className="absolute justify-center bottom-96">
