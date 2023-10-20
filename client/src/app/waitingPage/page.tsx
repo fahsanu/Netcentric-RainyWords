@@ -2,7 +2,7 @@ import React from "react";
 import { io } from "socket.io-client";
 
 export default function WaitingPage() {
-  const socket = io("http://localhost:4000/waitingPage", { transports : ['websocket'] });
+  const socket = io("http://172.20.10.4:4000/waitingPage", { transports : ['websocket'] });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">

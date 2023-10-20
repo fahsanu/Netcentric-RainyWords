@@ -12,7 +12,7 @@ function WelcomePage() {
     const url=`/words/${path}`;
   }
 
-  const socket = io("http://localhost:4000/welcomePage", { transports : ['websocket'] });
+  const socket = io("http://172.20.10.4:4000/welcomePage", { transports : ['websocket'] });
   const [connectedClients, setConnectedClients] = useState(0);
 
   useEffect(() => {

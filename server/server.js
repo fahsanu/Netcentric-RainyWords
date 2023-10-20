@@ -42,7 +42,7 @@ waitingPageSockets(io);
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
-const SERVER_IP = "localhost"; //fahfhi's hotspot 172.20.10.4
+const SERVER_IP = "172.20.10.4"; //fahfhi's hotspot 172.20.10.4
 server.listen(PORT, SERVER_IP, () => {
   console.log(`Server is running at http://${SERVER_IP}:${PORT}`);
 });
