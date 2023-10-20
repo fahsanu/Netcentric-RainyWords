@@ -3,6 +3,7 @@
 import Confetti from "react-confetti";
 import { useState } from "react";
 import Youloose from "../loserPage/youloose";
+import Link from "next/link";
 
 export default function Winner() {
   return (
@@ -24,7 +25,7 @@ export default function Winner() {
           className="px-6 py-4 w-4/5 text-black text-3xl hover:bg-amber-400 font-bold bg-stone-300 rounded-1xl border-4 border-black"
           type="button"
         >
-          Exit to Menu
+          <Link href="/welcomePage">Exit to Menu</Link>
         </button>
         <button
           className="px-6 py-4 w-4/5 text-black text-3xl hover:bg-amber-400 font-bold bg-stone-300 rounded-1xl border-4 border-black"

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function LandingPage() {
   const [countdown, setCountdown] = useState(3);
@@ -29,6 +30,7 @@ export default function LandingPage() {
           <h1 className="text-4xl font-bold">Beginning in...</h1>
           <div className="text-7xl font-bold pt-24 font-outline-2 top-28 text-center text-stone-300">
             {countdown > 0 ? countdown : "Go!"}
+            <Link href="/gamePage">ENTER</Link>
           </div>
         </div>
       </div>

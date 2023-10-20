@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function WaitingPage() {
   return (
@@ -8,6 +9,7 @@ export default function WaitingPage() {
       </h1>
       <div className="w-40 h-40 rounded-full border-t-4 border-r-4 border-b-4 border-gray-800 animate-spin"></div>
       <h1 className="text-4xl pt-20 font-bold mb-6">Waiting for Components</h1>
+      <Link href="/welcomePage">ENTER</Link>
     </div>
   );
 }
