@@ -1,3 +1,4 @@
+import { UserProvider } from "./UserInput/UserContext";
 import "./globals.css";
 import { Dela_Gothic_One, Poppins } from "next/font/google";
 
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${DeldaGothicOne.variable} ${poppins.variable}`}>
+        <UserProvider>
         {children}
+        </UserProvider>
       </body>
     </html>
   );
