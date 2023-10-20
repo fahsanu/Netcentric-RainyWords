@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Page</title>
+</head>
+<body>
+    <h1>Server Page</h1>
+    <p>Only the server can access this page.</p>
+    <button id="serverAction">Perform Server Action</button>
+    
+    <script>
+      const button = document.getElementById('serverAction');
+    
+      button.addEventListener('click', () => {
+        // Perform server-specific action here
+        alert('Server action performed!');
+      });
+    </script>
+</body>
+</html>
