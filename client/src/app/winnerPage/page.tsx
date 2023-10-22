@@ -25,13 +25,13 @@ export default function Winner() {
           className="px-6 py-4 w-4/5 text-black text-3xl hover:bg-amber-400 font-bold bg-stone-300 rounded-1xl border-4 border-black"
           type="button"
         >
-          <Link href="/welcomePage">Exit to Menu</Link>
+          <Link href="/">Exit to Menu</Link>
         </button>
         <button
           className="px-6 py-4 w-4/5 text-black text-3xl hover:bg-amber-400 font-bold bg-stone-300 rounded-1xl border-4 border-black"
           type="button"
         >
-          Play Again
+          <Link href="/welcomePage">Play Again</Link>
         </button>
       </div>
     </div>

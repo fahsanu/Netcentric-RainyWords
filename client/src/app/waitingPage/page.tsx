@@ -3,7 +3,7 @@ import Link from "next/link";
 import { io } from "socket.io-client";
 
 export default function WaitingPage() {
-  const socket = io("http://172.20.10.4:4000/waitingPage", {
+  const socket = io("http://localhost:4000/waitingPage", {
     transports: ["websocket"],
   });
 

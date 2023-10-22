@@ -1,11 +1,10 @@
-"use client";
-
+"use client"
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import io from "socket.io-client";
+import { useRouter } from 'next/navigation'; // Import useRouter
 
 export default function LandingPage() {
   const [countdown, setCountdown] = useState(3);
+  const router = useRouter(); // Initialize the router
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -13,6 +12,9 @@ export default function LandingPage() {
         setCountdown(countdown - 1);
       } else {
         clearInterval(timer);
+        
+        // When the countdown finishes, navigate to the WinnerPage
+        router.push('/gamePage');
       }
     }, 1000);
 
@@ -20,8 +22,6 @@ export default function LandingPage() {
       clearInterval(timer);
     };
   }, [countdown]);
-
-  const socket = io();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">
@@ -33,7 +33,6 @@ export default function LandingPage() {
           <h1 className="text-4xl font-bold">Beginning in...</h1>
           <div className="text-7xl font-bold pt-24 font-outline-2 top-28 text-center text-stone-300">
             {countdown > 0 ? countdown : "Go!"}
-            <Link href="/gamePage">ENTER</Link>
           </div>
         </div>
       </div>
