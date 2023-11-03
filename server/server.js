@@ -32,11 +32,9 @@ app.get('/', (res) => {
   res.sendFile(join(__dirname + 'page.tsx')); 
 });
 
-const mainPageSockets = require('./sockets/mainPage')
 const welcomePageSockets = require('./sockets/welcomePage')
 const waitingPageSockets = require('./sockets/waitingPage')
 
-mainPageSockets(io);
 welcomePageSockets(io);
 waitingPageSockets(io);
 

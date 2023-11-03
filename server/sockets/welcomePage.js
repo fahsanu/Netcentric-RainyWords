@@ -7,20 +7,20 @@ module.exports = (io) => {
   
       socket.on('startCountdown', () => {
         connectedClients++;
-        console.log(connectedClients);
+        console.log("Client connected:", connectedClients);
       });
   
       io.emit('updateConnectedClients', connectedClients);
+      console.log("Update total connected:", connectedClients)
   
       if (connectedClients === countdownStart) {
         io.emit('startCountdown');
       }
   
       socket.on('disconnect', () => {
-        console.log('A user disconnected from beginningPage');
+        console.log('User disconnected from welcomePage');
         if (connectedClients > 0) {
           connectedClients--;
-          console.log(connectedClients);
         }
         io.emit('updateConnectedClients', connectedClients);
       });

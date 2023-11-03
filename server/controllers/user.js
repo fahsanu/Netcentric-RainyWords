@@ -8,24 +8,25 @@ async function check_user(req) {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
+        // console.log(req)
 
-        if (!req || !req.name) {
+        if (!req || !req.username) {
             return { status: false, message: "Require username"}
         }
 
-        const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
+        const existing_user = await col.findOne({ name: req.username }, { projection: { _id: 0 } });
 
         if (existing_user) {
-            return existing_user
+            return {status: true, result: existing_user}
         } else {
             const newUser = {
-                name: req.name,
+                name: req.username,
                 id: uuidv4(),
                 score: 0
             } 
         
         await col.insertOne(newUser);
-        return newUser;
+        return {result: true, result: newUser};
         };
     }
     catch (error) {
