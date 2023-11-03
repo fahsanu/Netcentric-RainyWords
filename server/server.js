@@ -45,6 +45,17 @@ app.get('/server', (req, res) => {
   res.sendFile(__dirname + '/serverPage.html');
 });
 
+app.use(express.static('public')); // Serve the React app from the "public" directory
+
+io.on('connection', (socket) => {
+  console.log('A user connected to the server');
+
+  socket.on('reset', () => {
+    // Trigger the reset action on the client
+    io.emit('resetClient');
+  });
+});
+
 //Run Server -------------------------------------------------
 const PORT = 4000; 
 const SERVER_IP = "localhost"; //fahfhi's hotspot 172.20.10.4

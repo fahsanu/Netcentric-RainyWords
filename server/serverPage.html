@@ -10,12 +10,16 @@
     <p>Only the server can access this page.</p>
     <button id="serverAction">Perform Server Action</button>
     
+    <script src="/socket.io/socket.io.js"></script>
     <script>
       const button = document.getElementById('serverAction');
     
       button.addEventListener('click', () => {
-        // Perform server-specific action here
-        alert('Server action performed!');
+        // Create a socket.io client
+        const socket = io.connect('http://localhost:4000');
+        
+        // Emit the "reset" event to the server
+        socket.emit('reset');
       });
     </script>
 </body>
