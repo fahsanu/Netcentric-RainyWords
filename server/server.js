@@ -29,8 +29,8 @@ app.use('/words', words_routes)
 app.use('/user', user_routes);
 
 //Install middleware
-app.use(cors({ origin: 'http://localhost:3000' }));
-
+// app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 //Sockets -------------------------------------------------
 app.get('/', (res) => {
   res.sendFile(join(__dirname + 'page.tsx')); 

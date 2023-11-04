@@ -6,20 +6,39 @@ import Button from "./button";
 import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
 import { useRouter } from 'next/navigation'
+import axios from "axios";
 
-function WelcomePage() {
+const WelcomePage: React.FC = () => {
   const router = useRouter()
 
   const [active, setActive] = React.useState<number | null>(null);
+  const [mode, setMode] = useState<string>('');
   const [wating, setWaiting] = useState(false)
   const [connected, setConnected] = useState(true);
   const [count, setCount] = useState(0)
 
   const handleClick = (buttonId: number, mode: string) => {
     setActive(buttonId);
-    const key={mode};
     console.log(mode);
+    axios.post('/words', { mode })
+      .then((response) => {
+        setApiResponse(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
+
+  useEffect(() => {
+    localStorage.setItem('mode', mode);
+    const selectedMode = localStorage.getItem('mode');
+  }, [mode]);
+
+  const [apiResponse, setApiResponse] = useState<string>('');
+
+  const handleModeSelection = (selectedMode: string) => {
+    setMode(selectedMode);
+  };
 
   const { username } = useUser();
 
@@ -85,21 +104,21 @@ function WelcomePage() {
         </div>
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
-            onClick={() => handleClick(1, "easy")}
+            onClick={() => {handleClick(1, "easy"), handleModeSelection('easy')}}
             isActive={active === 1}
             mode="easy"
           >
             Easy
           </Button>
           <Button
-            onClick={() => handleClick(2, "medium")}
+            onClick={() => {handleClick(2, "medium"), handleModeSelection('medium')}}
             isActive={active === 2}
             mode="medium"
           >
             Medium
           </Button>
           <Button
-            onClick={() => handleClick(3, "hard")}
+            onClick={() => {handleClick(3, "hard"), handleModeSelection('hard')}}
             isActive={active === 3}
             mode="hard"
           >

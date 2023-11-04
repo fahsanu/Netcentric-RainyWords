@@ -3,6 +3,7 @@
 import Confetti from "react-confetti";
 import { useState } from "react";
 import Youloose from "./youloose";
+import Link from "next/link";
 
 export default function Loser() {
   return (
@@ -24,13 +25,13 @@ export default function Loser() {
           className="px-6 py-4 w-4/5 text-black text-3xl hover:bg-amber-400 font-bold bg-stone-300 rounded-1xl border-4 border-black"
           type="button"
         >
-          Exit to Menu
+          <Link href="/">Exit to menu</Link>
         </button>
         <button
           className="px-6 py-4 w-4/5 text-black text-3xl hover:bg-amber-400 font-bold bg-stone-300 rounded-1xl border-4 border-black"
           type="button"
         >
-          Play Again
+          <Link href="/welcomePage">Play Again</Link>
         </button>
       </div>
     </div>
