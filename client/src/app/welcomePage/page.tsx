@@ -5,9 +5,16 @@ import Link from "next/link";
 import Button from "./button";
 import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
+import { useRouter } from 'next/navigation'
 
 function WelcomePage() {
+  const router = useRouter()
+
   const [active, setActive] = React.useState<number | null>(null);
+  const [wating, setWaiting] = useState(false)
+  const [connected, setConnected] = useState(true);
+  const [count, setCount] = useState(0)
+
   const handleClick = (buttonId: number, mode: string) => {
     setActive(buttonId);
     const key={mode};
@@ -17,17 +24,48 @@ function WelcomePage() {
   const { username } = useUser();
 
   const socket = io("http://localhost:4000/welcomePage", { transports : ['websocket'] });
-  const [connectedClients, setConnectedClients] = useState(0);
 
   useEffect(() => {
-    socket.on('updateConnectedClients', (count) => {
-      setConnectedClients(count);
+    const socket = io('http://localhost:4000'); 
+
+    socket.on('resetClient', () => {
+      window.location.href = '/';
     });
+
+    return () => {
+      socket.disconnect(); 
+    };
   }, []);
 
   const handleWaitingPage = () => {
-    socket.emit('startCountdown');
+    if (connected) {
+      setConnected(false)
+      setWaiting(true)
+      socket.emit('connected');
+      console.log("Socket connected:", connected)
+    }
   };
+
+  if (wating) {
+
+    socket.on('updateConnectedClients', (client) => {
+      setCount(client)
+      console.log('from socket:', count)
+      if (client === 2) {
+        router.push('/beginningPage')
+      }
+    })
+
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
+        <h1 className="text-9xl text-center text-stone-300 font-outline-6 tracking-tighter pt-20">
+          RainyWords
+        </h1>
+        <div className="w-40 h-40 rounded-full border-t-4 border-r-4 border-b-4 border-gray-800 animate-spin"></div>
+        <h1 className="text-4xl pt-20 font-bold mb-6">Waiting for Components</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
@@ -74,7 +112,7 @@ function WelcomePage() {
             type="button"
             onClick={handleWaitingPage}
           >
-            <Link href="/waitingPage">START</Link>
+            START
           </button>
         </div>
       </div>

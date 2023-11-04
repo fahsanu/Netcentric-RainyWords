@@ -1,8 +1,19 @@
-import React from "react";
+'use client'
+import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 
 export default function WaitingPage() {
-  const socket = io("http://localhost:4000/waitingPage", { transports : ['websocket'] });
+  useEffect(() => {
+    const socket = io('http://localhost:4000'); 
+
+    socket.on('resetClient', () => {
+      window.location.href = '/';
+    });
+
+    return () => {
+      socket.disconnect(); 
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">

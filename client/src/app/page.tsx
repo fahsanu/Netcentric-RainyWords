@@ -15,15 +15,15 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/user/check', { username });
-      router.push(`/user/check/${response.data.username}`);
+      const response = await axios.post('http://localhost:4000/user/check', { username });
+      // router.push(`/user/check/${response.data.username}`);
       console.log(`username: ${username}`)
     } catch (error) {
       console.log(error)
     }
   
   }
-  const socket = io("http://localhost:4000/", { transports : ['websocket'] });
+  // const socket = io("http://localhost:4000/", { transports : ['websocket'] });
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
