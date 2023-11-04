@@ -3,26 +3,30 @@ module.exports = (io) => {
     const countdownStart = 2;
   
     io.of('/welcomePage').on('connection', (socket) => {
-      console.log('User connected welcomePage');
-  
-      socket.on('startCountdown', () => {
+      console.log('User online activated');
+
+      socket.on('connected', () => {
         connectedClients++;
-        console.log("Client connected:", connectedClients);
+        console.log(connectedClients);
       });
-  
-      io.emit('updateConnectedClients', connectedClients);
-      console.log("Update total connected:", connectedClients)
-  
+      console.log("Client connected:", connectedClients);
+
+      io.of('/welcomePage').emit('updateConnectedClients', connectedClients);
+
       if (connectedClients === countdownStart) {
-        io.emit('startCountdown');
-      }
+        io.of('/welcomePage').emit('startCountdown');
+       }
   
       socket.on('disconnect', () => {
         console.log('User disconnected from welcomePage');
+
         if (connectedClients > 0) {
           connectedClients--;
+          io.of('/welcomePage').emit('updateConnectedClients', connectedClients);
+          console.log("Client connected:", connectedClients);
         }
-        io.emit('updateConnectedClients', connectedClients);
       });
+
+      
     });
   };

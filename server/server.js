@@ -6,7 +6,11 @@ const cors = require('cors');
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhsot:3000"
+  }
+});
 
 
 //API route -------------------------------------------------
@@ -33,10 +37,8 @@ app.get('/', (res) => {
 });
 
 const welcomePageSockets = require('./sockets/welcomePage')
-const waitingPageSockets = require('./sockets/waitingPage')
 
 welcomePageSockets(io);
-waitingPageSockets(io);
 
 //Server Side Page
 app.get('/server', (req, res) => {

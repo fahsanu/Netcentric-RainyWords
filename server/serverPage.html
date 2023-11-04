@@ -8,19 +8,27 @@
 <body>
     <h1>Server Page</h1>
     <p>Only the server can access this page.</p>
-    <button id="serverAction">Perform Server Action</button>
+    <button id="serverAction">Restart</button>
+    <p>Online clients: <span id="onlineClient">0</span></p>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const button = document.getElementById('serverAction');
+      const onlineClientCount = document.getElementById('onlineClient')
     
       button.addEventListener('click', () => {
-        // Create a socket.io client
         const socket = io.connect('http://localhost:4000');
-        
-        // Emit the "reset" event to the server
         socket.emit('reset');
       });
+
+      const socket = io.connect('http://localhost:4000/welcomePage');
+
+  
+      socket.on('updateConnectedClients', (count) => {
+        onlineClientCount.textContent = count;
+        console.log(count);
+      });
+
     </script>
 </body>
 </html>
