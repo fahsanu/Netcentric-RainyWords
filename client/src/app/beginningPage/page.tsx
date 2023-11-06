@@ -2,12 +2,15 @@
 
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function LandingPage() {
+export default function LandingPage(props: string) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
 
   const [countdown, setCountdown] = useState(3);
+  // const [mode, setMode] = useState('')
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -15,7 +18,7 @@ export default function LandingPage() {
         setCountdown(countdown - 1);
       } else {
         clearInterval(timer);
-        router.push('/gamepage')
+        router.push(`/gamePage?mode=${mode}`)
       }
     }, 1000);
 
@@ -24,18 +27,6 @@ export default function LandingPage() {
 
     };
   }, [countdown]);
-
-  useEffect(() => {
-    const socket = io('http://localhost:4000'); 
-
-    socket.on('resetClient', () => {
-      window.location.href = '/';
-    });
-
-    return () => {
-      socket.disconnect(); 
-    };
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">

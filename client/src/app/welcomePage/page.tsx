@@ -1,6 +1,5 @@
 'use client'
-import React from "react";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "./button";
 import { io } from "socket.io-client";
@@ -17,24 +16,10 @@ const WelcomePage: React.FC = () => {
   const [connected, setConnected] = useState(true);
   const [count, setCount] = useState(0)
 
-  const handleClick = (buttonId: number, mode: string) => {
-    setActive(buttonId);
-    console.log(mode);
-    axios.post('/words', { mode })
-      .then((response) => {
-        setApiResponse(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   useEffect(() => {
     localStorage.setItem('mode', mode);
     const selectedMode = localStorage.getItem('mode');
   }, [mode]);
-
-  const [apiResponse, setApiResponse] = useState<string>('');
 
   const handleModeSelection = (selectedMode: string) => {
     setMode(selectedMode);
@@ -44,6 +29,7 @@ const WelcomePage: React.FC = () => {
 
   const socket = io("http://localhost:4000/welcomePage", { transports : ['websocket'] });
 
+  //reset game
   useEffect(() => {
     const socket = io('http://localhost:4000'); 
 
@@ -56,6 +42,7 @@ const WelcomePage: React.FC = () => {
     };
   }, []);
 
+  //consider waiting page
   const handleWaitingPage = () => {
     if (connected) {
       setConnected(false)
@@ -65,15 +52,17 @@ const WelcomePage: React.FC = () => {
     }
   };
 
+  //start countdown
   if (wating) {
 
     socket.on('updateConnectedClients', (client) => {
       setCount(client)
       console.log('from socket:', count)
-      if (client === 2) {
-        router.push('/beginningPage')
-      }
     })
+
+    if (count === 2) {
+      router.push(`/beginningPage?mode=${mode}`)
+    }
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
@@ -86,6 +75,9 @@ const WelcomePage: React.FC = () => {
     );
   }
 
+  
+
+  //main return
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400">
       <div className="flex flex-wrap items-center justify-center">
@@ -104,21 +96,21 @@ const WelcomePage: React.FC = () => {
         </div>
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
-            onClick={() => {handleClick(1, "easy"), handleModeSelection('easy')}}
+            onClick={() => { handleModeSelection('easy')} }
             isActive={active === 1}
             mode="easy"
           >
             Easy
           </Button>
           <Button
-            onClick={() => {handleClick(2, "medium"), handleModeSelection('medium')}}
+            onClick={() => { handleModeSelection('medium')} }
             isActive={active === 2}
             mode="medium"
           >
             Medium
           </Button>
           <Button
-            onClick={() => {handleClick(3, "hard"), handleModeSelection('hard')}}
+            onClick={() => { handleModeSelection('hard')}}
             isActive={active === 3}
             mode="hard"
           >

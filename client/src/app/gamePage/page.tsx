@@ -3,25 +3,39 @@
 import React, { useState, useEffect } from "react";
 import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
-
-const words = [
-  "apple",
-  "banana",
-  "cherry",
-  "date",
-  "elderberry",
-  "fig",
-  "grape",
-];
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function GamePage() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
   const [countdown, setCountdown] = useState(120); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
+  const [words, setWords] = useState([])
+  const [run, setRun] = useState(true)
 
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
+
+  useEffect(() => {
+    // let isRun = false;
+    fetch(`http://localhost:4000/words/${mode}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setWords(data))
+      .catch((error) => console.log("Getting error", error));
+
+    // return () => {
+    //   isRun = true;
+    // };
+  }, []);
 
   useEffect(() => {
     if (isPlaying) {
@@ -43,6 +57,8 @@ export default function GamePage() {
     if (isPlaying) {
       const wordInterval = setInterval(() => {
         const randomWord = words[Math.floor(Math.random() * words.length)];
+        // console.log(words)
+        // console.log(randomWord)
         const wordIndex = Math.floor(Math.random() * 3);
         setFallingWords((prevWords) => {
           const newWords = [...prevWords];
@@ -53,7 +69,7 @@ export default function GamePage() {
 
       return () => clearInterval(wordInterval);
     }
-  }, [isPlaying]);
+  }, [isPlaying, words]);
 
   useEffect(() => {
     if (fallingWords.length > 0) {
