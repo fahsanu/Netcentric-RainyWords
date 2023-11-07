@@ -1,20 +1,20 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import Button from "./button";
 import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 const WelcomePage: React.FC = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const [active, setActive] = React.useState<number | null>(null);
-  const [mode, setMode] = useState<string>('');
-  const [wating, setWaiting] = useState(false)
+  const [mode, setMode] = useState<string>("");
+  const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
-  const [easy, setEasy] = useState(0)
-  const [medium , setMedium] = useState(0)
-  const [hard, setHard] = useState(0)
+  const [easy, setEasy] = useState(0);
+  const [medium, setMedium] = useState(0);
+  const [hard, setHard] = useState(0);
 
   const socket = io('http://localhost:4000', { transports : ['websocket'] }); 
 
@@ -44,36 +44,56 @@ const WelcomePage: React.FC = () => {
   const handleModeSelection = (selectedMode: string) => {
     setMode(selectedMode);
   };
+  const handleClick = (buttonId: number, mode: string) => {
+    setActive(buttonId);
+    console.log(mode);
+  };
 
   useEffect(() => {
-    localStorage.setItem('mode', mode);
-    const selectedMode = localStorage.getItem('mode');
+    localStorage.setItem("mode", mode);
+    const selectedMode = localStorage.getItem("mode");
   }, [mode]);
 
   const { username } = useUser();
 
+  // const socket = io("http://localhost:4000/welcomePage", {
+  //   transports: ["websocket"],
+  // });
+
+  //reset game
+  useEffect(() => {
+    const socket = io("http://localhost:4000");
+
+    socket.on("resetClient", () => {
+      window.location.href = "/";
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   //consider waiting page
   const handleWaitingPage = () => {
     if (connected) {
-      setConnected(false)
-      setWaiting(true)
-      console.log("Socket connected:", connected)
+      setConnected(false);
+      setWaiting(true);
+      console.log("Socket connected:", connected);
       // socket.emit('ready')
     }
   };
 
   //start countdown
   if (wating) {
-
-    socket.on('updateConnectedClients', (easyio, mediumio, hardio) => {
-      setEasy(easyio)
-      setMedium(mediumio)
-      setHard(hardio)
-      console.log('from socket easy:', easy)
-      console.log('from socket medium:', medium)
-      console.log('from socket hard:', hard)
+    socket.on("updateConnectedClients", (easyio, mediumio, hardio) => {
+      setEasy(easyio);
+      setMedium(mediumio);
+      setHard(hardio);
+      console.log("from socket easy:", easy);
+      console.log("from socket medium:", medium);
+      console.log("from socket hard:", hard);
       // router.push(`/beginningPage?mode=${mode}`)
-    })
+    });
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
@@ -81,7 +101,9 @@ const WelcomePage: React.FC = () => {
           RainyWords
         </h1>
         <div className="w-40 h-40 rounded-full border-t-4 border-r-4 border-b-4 border-gray-800 animate-spin"></div>
-        <h1 className="text-4xl pt-20 font-bold mb-6">Waiting for Components</h1>
+        <h1 className="text-4xl pt-20 font-bold mb-6">
+          Waiting for Components
+        </h1>
       </div>
     );
   }
@@ -110,21 +132,33 @@ const WelcomePage: React.FC = () => {
         </div>
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
-            onClick={() => { socket.emit('easyConnection'), handleModeSelection('easy')} }
+            onClick={() => {
+              socket.emit("easyConnection");
+              handleClick(1, "easy");
+              handleModeSelection("easy");
+            }}
             isActive={active === 1}
             mode="easy"
           >
             Easy
           </Button>
           <Button
-            onClick={() => { socket.emit('mediumConnection') , handleModeSelection('medium')} }
+            onClick={() => {
+              socket.emit("mediumConnection");
+              handleClick(2, "medium");
+              handleModeSelection("medium");
+            }}
             isActive={active === 2}
             mode="medium"
           >
             Medium
           </Button>
           <Button
-            onClick={() => { socket.emit('hardConnection') , handleModeSelection('hard')}}
+            onClick={() => {
+              socket.emit("hardConnection");
+              handleClick(3, "hard");
+              handleModeSelection("hard");
+            }}
             isActive={active === 3}
             mode="hard"
           >
@@ -145,7 +179,7 @@ const WelcomePage: React.FC = () => {
         <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
           © 2023 Copyright :
           <a
-            className="text-neutral-800 dark:text-neutral-900 mx-2"
+            className="text-neutral-800 dark:text-neutral-200 mx-2"
             href="https://tailwind-elements.com/"
           >
             Netcentric Project AY1/2023
@@ -154,6 +188,6 @@ const WelcomePage: React.FC = () => {
       </footer>
     </div>
   );
-}
+};
 
 export default WelcomePage;

@@ -3,21 +3,21 @@
 import React, { useState, useEffect } from "react";
 import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function GamePage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const mode = searchParams.get('mode')
-  console.log(mode)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get("mode");
+  console.log(mode);
 
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
   const [countdown, setCountdown] = useState(120); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
-  const [words, setWords] = useState([])
-  const [run, setRun] = useState(true)
+  const [words, setWords] = useState([]);
+  const [run, setRun] = useState(true);
 
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
 
@@ -119,13 +119,16 @@ export default function GamePage() {
       </div>
 
       <div className="flex flex-col items-center justify-center">
-        <div className="relative block px-4 h-[45vh] overflow-hidden w-10/12 bg-slate-500 border-4 border-black pt-4">
+        <div className="relative block px-4 h-[55vh] overflow-hidden w-10/12 bg-slate-500 border-4 border-black pt-4">
           <div className="flex justify-between">
             <h1 className="text-stone-300 text-3xl top-2 left-5">
               Name : {score}
             </h1>
-            <h1 className="text-stone-300 text-3xl top-2 right-5">
+            <h1 className="text-stone-300 text-3xl top-2">
               Time: {countdown} sec
+            </h1>
+            <h1 className="text-stone-300 text-3xl top-2 right-5">
+              Name : score
             </h1>
           </div>
 
