@@ -18,7 +18,6 @@ export default function Home() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post('http://localhost:4000/user/check', { username });
-      // router.push(`/user/check/${response.data.username}`);
       socket.emit('clientName', username)
       console.log(`username: ${username}`)
     } catch (error) {

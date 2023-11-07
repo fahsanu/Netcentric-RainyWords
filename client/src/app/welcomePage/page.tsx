@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Button from "./button";
 import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
@@ -17,6 +16,31 @@ const WelcomePage: React.FC = () => {
   const [medium , setMedium] = useState(0)
   const [hard, setHard] = useState(0)
 
+  const socket = io('http://localhost:4000', { transports : ['websocket'] }); 
+
+  //reset game
+  useEffect(() => {
+
+    socket.on('resetClient', () => {
+      window.location.href = '/';
+    });
+
+    return () => {
+      socket.disconnect(); 
+    };
+  }, []);
+
+  const [client, setClient] = useState('')
+  const [id, setId] = useState(0)
+
+  useEffect(() => {
+    socket.on('update', (data) => {
+      // console.log(data.name)
+      setClient(data.name)
+      setId(data.id)
+    });
+  }, []);
+
   const handleModeSelection = (selectedMode: string) => {
     setMode(selectedMode);
   };
@@ -27,21 +51,6 @@ const WelcomePage: React.FC = () => {
   }, [mode]);
 
   const { username } = useUser();
-
-  const socket = io("http://localhost:4000/welcomePage", { transports : ['websocket'] });
-
-  //reset game
-  useEffect(() => {
-    const socket = io('http://localhost:4000'); 
-
-    socket.on('resetClient', () => {
-      window.location.href = '/';
-    });
-
-    return () => {
-      socket.disconnect(); 
-    };
-  }, []);
 
   //consider waiting page
   const handleWaitingPage = () => {
@@ -66,13 +75,6 @@ const WelcomePage: React.FC = () => {
       // router.push(`/beginningPage?mode=${mode}`)
     })
 
-
-      // socket.on('startGame',() => {
-      //   console.log('isit in')
-      //   router.push(`/beginningPage?mode=${mode}`)
-      // }); 
-    
-
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
         <h1 className="text-9xl text-center text-stone-300 font-outline-6 tracking-tighter pt-20">
@@ -84,7 +86,10 @@ const WelcomePage: React.FC = () => {
     );
   }
 
-  
+   socket.on('startGame',() => {
+        console.log('isit in')
+        router.push(`/beginningPage?mode=${mode}`)
+    }); 
 
   //main return
   return (
