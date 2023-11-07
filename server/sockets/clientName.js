@@ -1,30 +1,25 @@
 module.exports = (io) => {
-    const connectedClients = {}
-    const connectedEasyClients = []
-    const connectedMediumClients = []
-    const connectedHardClients = []
+    const clientScores = {}
+    const clientsData = {}
 
     io.of('/').on('connection', (socket) => {
 
+        // io.emit('updateName', clientsData)
+
         socket.on('clientName', (name) => {
-            connectedClients[socket.id] = name
-            console.log(connectedClients)
+            const id = socket.id
+            clientsData[id] = { name, score: 0 };
+            console.log('New client connected:', clientsData);
+            io.emit('update', { id, name });
         })
 
         socket.on('scoreUpdate', (score) => {
+            const client = clientsData.find((client) => client.id === socket.id);
+            if (client) {
+               client.score = score;
+            }
+            io.emit('updateScores', clientScores)
         })
-
-        // socket.on('easyName', (name) => {
-        //     connectedEasyClients.push({ socket: name})
-        // })
-
-        // socket.on('mediumName', (name) => {
-        //     connectedMediumClients.push({ socket: name})
-        // })
-
-        // socket.on('hardName', (name) => {
-        //     connectedHardClients.push({ socket: name})
-        // })
 
     })
 }

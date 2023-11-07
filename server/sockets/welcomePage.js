@@ -9,7 +9,7 @@ module.exports = (io) => {
       hard: [],
     };
   
-    io.of('/welcomePage').on('connection', (socket) => {
+    io.on('connection', (socket) => {
 
       //add client
       socket.on('easyConnection', () => {
@@ -28,7 +28,7 @@ module.exports = (io) => {
       })
 
       //update client to io
-      io.of('/welcomePage').emit('updateConnectedClients', easyClients, mediumClients, hardClients);
+      io.emit('updateConnectedClients', easyClients, mediumClients, hardClients);
 
       //check to start game
         if (easyClients === connectedClients) {
