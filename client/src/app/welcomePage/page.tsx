@@ -5,7 +5,6 @@ import Button from "./button";
 import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
 import { useRouter } from 'next/navigation'
-import axios from "axios";
 
 const WelcomePage: React.FC = () => {
   const router = useRouter()
@@ -14,16 +13,18 @@ const WelcomePage: React.FC = () => {
   const [mode, setMode] = useState<string>('');
   const [wating, setWaiting] = useState(false)
   const [connected, setConnected] = useState(true);
-  const [count, setCount] = useState(0)
+  const [easy, setEasy] = useState(0)
+  const [medium , setMedium] = useState(0)
+  const [hard, setHard] = useState(0)
+
+  const handleModeSelection = (selectedMode: string) => {
+    setMode(selectedMode);
+  };
 
   useEffect(() => {
     localStorage.setItem('mode', mode);
     const selectedMode = localStorage.getItem('mode');
   }, [mode]);
-
-  const handleModeSelection = (selectedMode: string) => {
-    setMode(selectedMode);
-  };
 
   const { username } = useUser();
 
@@ -47,22 +48,30 @@ const WelcomePage: React.FC = () => {
     if (connected) {
       setConnected(false)
       setWaiting(true)
-      socket.emit('connected');
       console.log("Socket connected:", connected)
+      // socket.emit('ready')
     }
   };
 
   //start countdown
   if (wating) {
 
-    socket.on('updateConnectedClients', (client) => {
-      setCount(client)
-      console.log('from socket:', count)
+    socket.on('updateConnectedClients', (easyio, mediumio, hardio) => {
+      setEasy(easyio)
+      setMedium(mediumio)
+      setHard(hardio)
+      console.log('from socket easy:', easy)
+      console.log('from socket medium:', medium)
+      console.log('from socket hard:', hard)
+      // router.push(`/beginningPage?mode=${mode}`)
     })
 
-    if (count === 2) {
-      router.push(`/beginningPage?mode=${mode}`)
-    }
+
+      // socket.on('startGame',() => {
+      //   console.log('isit in')
+      //   router.push(`/beginningPage?mode=${mode}`)
+      // }); 
+    
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
@@ -96,21 +105,21 @@ const WelcomePage: React.FC = () => {
         </div>
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
-            onClick={() => { handleModeSelection('easy')} }
+            onClick={() => { socket.emit('easyConnection'), handleModeSelection('easy')} }
             isActive={active === 1}
             mode="easy"
           >
             Easy
           </Button>
           <Button
-            onClick={() => { handleModeSelection('medium')} }
+            onClick={() => { socket.emit('mediumConnection') , handleModeSelection('medium')} }
             isActive={active === 2}
             mode="medium"
           >
             Medium
           </Button>
           <Button
-            onClick={() => { handleModeSelection('hard')}}
+            onClick={() => { socket.emit('hardConnection') , handleModeSelection('hard')}}
             isActive={active === 3}
             mode="hard"
           >

@@ -9,6 +9,7 @@ export default function GamePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
+  console.log(mode)
 
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
@@ -141,7 +142,7 @@ export default function GamePage() {
                       initial={{ y: -100 * (wordIndex + 1) }}
                       animate={{ y: 1000 }}
                       exit={{ opacity: 0, y: 1000 }}
-                      transition={{ duration: 30 }}
+                      transition={{ duration: 40 }}
                       className="relative text-lg font-semibold text-white"
                     >
                       {word}

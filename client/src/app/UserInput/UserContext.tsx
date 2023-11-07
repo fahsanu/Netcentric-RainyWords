@@ -22,7 +22,7 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [username, setUsername] = useState(() => {
+    const [username, setUsername] = useState(() => {
     const storedUsername = localStorage.getItem('username');
     return storedUsername || '';
   });
