@@ -13,7 +13,7 @@ const WelcomePage: React.FC = () => {
   const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
 
-  const socket = io('http://localhost:4000', { transports : ['websocket'] }); 
+  const socket = io('http://172.20.10.12:4000', { transports : ['websocket'] }); 
 
   //reset game
   useEffect(() => {
@@ -25,17 +25,6 @@ const WelcomePage: React.FC = () => {
     return () => {
       socket.disconnect(); 
     };
-  }, []);
-
-  const [client, setClient] = useState('')
-  const [id, setId] = useState(0)
-
-  useEffect(() => {
-    socket.on('update', (data) => {
-      // console.log(data.name)
-      setClient(data.name)
-      setId(data.id)
-    });
   }, []);
 
   const handleModeSelection = (selectedMode: string) => {
@@ -59,21 +48,11 @@ const WelcomePage: React.FC = () => {
       setConnected(false);
       setWaiting(true);
       console.log("Socket connected:", connected);
-      // socket.emit('ready')
     }
   };
 
   //start countdown
   if (wating) {
-    // socket.on("updateConnectedClients", (easyio, mediumio, hardio) => {
-    //   setEasy(easyio);
-    //   setMedium(mediumio);
-    //   setHard(hardio);
-    //   console.log("from socket easy:", easy);
-    //   console.log("from socket medium:", medium);
-    //   console.log("from socket hard:", hard);
-    //   router.push(`/beginningPage?mode=${mode}`)
-    // });
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
@@ -88,9 +67,8 @@ const WelcomePage: React.FC = () => {
     );
   }
 
-  socket.on('startGame',() => {
-    router.push(`/beginningPage?mode=${mode}&id=${id}`)
-    socket.disconnect()
+  socket.on('startGame',(mode) => {
+    router.push(`/beginningPage?mode=${mode}`)
   })
 
   //main return
@@ -113,7 +91,7 @@ const WelcomePage: React.FC = () => {
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
             onClick={() => {
-              socket.emit("easyConnection");
+              socket.emit('joinRoom', 'easy', {username});
               handleClick(1, "easy");
               handleModeSelection("easy");
             }}
@@ -124,7 +102,7 @@ const WelcomePage: React.FC = () => {
           </Button>
           <Button
             onClick={() => {
-              socket.emit("mediumConnection");
+              socket.emit('joinRoom', 'medium', {username});
               handleClick(2, "medium");
               handleModeSelection("medium");
             }}
@@ -135,7 +113,7 @@ const WelcomePage: React.FC = () => {
           </Button>
           <Button
             onClick={() => {
-              socket.emit("hardConnection");
+              socket.emit('joinRoom', 'hard', {username});
               handleClick(3, "hard");
               handleModeSelection("hard");
             }}

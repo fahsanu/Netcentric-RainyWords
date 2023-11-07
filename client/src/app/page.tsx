@@ -13,11 +13,11 @@ export default function Home() {
     setUsername(event.target.value);
   };
 
-  const socket = io("http://localhost:4000/", { transports : ['websocket'] });
+  const socket = io("http://172.20.10.12:4000/", { transports : ['websocket'] });
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/user/check', { username });
+      const response = await axios.post('http://172.20.10.12:4000/user/check', { username });
       socket.emit('clientName', username)
       console.log(`username: ${username}`)
     } catch (error) {

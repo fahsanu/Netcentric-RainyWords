@@ -8,7 +8,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhsot:3000"
+    origin: "http://172.20.10.12:3000"
   }
 });
 
@@ -37,10 +37,10 @@ app.get('/', (res) => {
 });
 
 const welcomePageSockets = require('./sockets/welcomePage')
-const clientNameSockets = require('./sockets/clientName')
+// const clientNameSockets = require('./sockets/clientName')
 
 welcomePageSockets(io);
-clientNameSockets(io)
+// clientNameSockets(io)
 
 //Server Side Page
 app.get('/server', (req, res) => {
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
-const SERVER_IP = "localhost"; //fahfhi's hotspot 172.20.10.4
+const SERVER_IP = "172.20.10.12"; //fahfhi's hotspot 172.20.10.12
 server.listen(PORT, SERVER_IP, () => {
   console.log(`Server is running at http://${SERVER_IP}:${PORT}`);
 });

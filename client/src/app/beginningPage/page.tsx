@@ -7,8 +7,6 @@ export default function LandingPage(props: string) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
-  const id = searchParams.get('id')
-  console.log(id)
 
   const [countdown, setCountdown] = useState(3);
 

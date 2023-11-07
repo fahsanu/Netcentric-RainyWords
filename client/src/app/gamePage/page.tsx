@@ -22,14 +22,24 @@ export default function GamePage() {
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
 
   //socket set up
-  const socket = io('http://localhost:4000', { transports : ['websocket'] }); 
+  const socket = io('http://172.20.10.12:4000', { transports : ['websocket'] }); 
 
+  const [get, setGet] = useState(true)
+  const [all, setAll] = useState<[
+    {name: string, score: number},
+    {name: string, score: number}
+  ]>([
+    {name: '', score:0},
+    {name:'', score:0}
+  ])
   const [player, setPlayer] = useState('')
   const [enemy, setEnemy] = useState('')
+  const [playerScore, setPlayerScore] = useState(0)
+  const [enemyScore, setEnemyScore] = useState(0)
 
   useEffect(() => {
     // let isRun = false;
-    fetch(`http://localhost:4000/words/${mode}`, {
+    fetch(`http://172.20.10.12:4000/words/${mode}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -46,13 +56,16 @@ export default function GamePage() {
 
   //get data from socket
   useEffect(() => {
-    console.log('come herer')
-    socket.emit('start', () => {
-      socket.on('get', (data) => {
-        console.log(data)
-      })
+    socket.emit('sendData', mode)
+    socket.on('get', (ans) => {
+    setAll(ans)
+    setPlayer(all[0].name)
+    setEnemy(all[1].name)
+    setPlayerScore(all[0].score)
+    setEnemyScore(all[1].score)
+    setGet(false)
     })
-  }, [])
+  })
 
   //reset game
   useEffect(() => {
@@ -150,13 +163,13 @@ export default function GamePage() {
         <div className="relative block px-4 h-[55vh] overflow-hidden w-10/12 bg-slate-500 border-4 border-black pt-4">
           <div className="flex justify-between">
             <h1 className="text-stone-300 text-3xl top-2 left-5">
-              Name : {score}
+              {player} : {playerScore}
             </h1>
             <h1 className="text-stone-300 text-3xl top-2">
               Time: {countdown} sec
             </h1>
             <h1 className="text-stone-300 text-3xl top-2 right-5">
-              Name : score
+              {enemy} : {enemyScore}
             </h1>
           </div>
 
