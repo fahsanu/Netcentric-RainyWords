@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function LandingPage(props: string) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
+  const id = searchParams.get('id')
+  console.log(id)
 
   const [countdown, setCountdown] = useState(3);
-  // const [mode, setMode] = useState('')
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -26,7 +26,7 @@ export default function LandingPage(props: string) {
       clearInterval(timer);
 
     };
-  }, [countdown]);
+  }, [countdown, mode, router]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">

@@ -32,23 +32,23 @@ module.exports = (io) => {
 
       //check to start game
         if (easyClients === connectedClients) {
-          console.log('easy in')
+          // console.log('easy in')
           io.emit('startGame');
         }
   
         if (mediumClients === connectedClients) {
-          console.log('medium in')
+          // console.log('medium in')
           io.emit('startGame');
         }
   
         if (hardClients === connectedClients) {
-          console.log('hard in')
+          // console.log('hard in')
           io.emit('startGame');
         }
 
       //disconnect
       socket.on('disconnect', () => {
-        console.log('User disconnected from welcomePage');
+        // console.log('User disconnected from welcomePage');
 
         // if (connectedClients > 0) {
         //   connectedClients--;

@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
+import { io } from "socket.io-client";
 
 export default function GamePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode");
-  console.log(mode);
 
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
@@ -20,6 +20,12 @@ export default function GamePage() {
   const [run, setRun] = useState(true);
 
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
+
+  //socket set up
+  const socket = io('http://localhost:4000', { transports : ['websocket'] }); 
+
+  const [player, setPlayer] = useState('')
+  const [enemy, setEnemy] = useState('')
 
   useEffect(() => {
     // let isRun = false;
@@ -38,8 +44,30 @@ export default function GamePage() {
     // };
   }, []);
 
+  //get data from socket
+  useEffect(() => {
+    console.log('come herer')
+    socket.emit('start', () => {
+      socket.on('get', (data) => {
+        console.log(data)
+      })
+    })
+  }, [])
+
+  //reset game
+  useEffect(() => {
+    socket.on('resetClient', () => {
+      window.location.href = '/';
+    });
+
+    return () => {
+      socket.disconnect(); 
+    };
+  }, []);
+
   useEffect(() => {
     if (isPlaying) {
+      socket.emit('')
       const gameInterval = setInterval(() => {
         if (countdown > 0) {
           setCountdown((prevCountdown) => prevCountdown - 1);

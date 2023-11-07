@@ -12,9 +12,6 @@ const WelcomePage: React.FC = () => {
   const [mode, setMode] = useState<string>("");
   const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
-  const [easy, setEasy] = useState(0);
-  const [medium, setMedium] = useState(0);
-  const [hard, setHard] = useState(0);
 
   const socket = io('http://localhost:4000', { transports : ['websocket'] }); 
 
@@ -56,23 +53,6 @@ const WelcomePage: React.FC = () => {
 
   const { username } = useUser();
 
-  // const socket = io("http://localhost:4000/welcomePage", {
-  //   transports: ["websocket"],
-  // });
-
-  //reset game
-  useEffect(() => {
-    const socket = io("http://localhost:4000");
-
-    socket.on("resetClient", () => {
-      window.location.href = "/";
-    });
-
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-
   //consider waiting page
   const handleWaitingPage = () => {
     if (connected) {
@@ -85,15 +65,15 @@ const WelcomePage: React.FC = () => {
 
   //start countdown
   if (wating) {
-    socket.on("updateConnectedClients", (easyio, mediumio, hardio) => {
-      setEasy(easyio);
-      setMedium(mediumio);
-      setHard(hardio);
-      console.log("from socket easy:", easy);
-      console.log("from socket medium:", medium);
-      console.log("from socket hard:", hard);
-      // router.push(`/beginningPage?mode=${mode}`)
-    });
+    // socket.on("updateConnectedClients", (easyio, mediumio, hardio) => {
+    //   setEasy(easyio);
+    //   setMedium(mediumio);
+    //   setHard(hardio);
+    //   console.log("from socket easy:", easy);
+    //   console.log("from socket medium:", medium);
+    //   console.log("from socket hard:", hard);
+    //   router.push(`/beginningPage?mode=${mode}`)
+    // });
 
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
@@ -108,10 +88,10 @@ const WelcomePage: React.FC = () => {
     );
   }
 
-   socket.on('startGame',() => {
-        console.log('isit in')
-        router.push(`/beginningPage?mode=${mode}`)
-    }); 
+  socket.on('startGame',() => {
+    router.push(`/beginningPage?mode=${mode}&id=${id}`)
+    socket.disconnect()
+  })
 
   //main return
   return (

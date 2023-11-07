@@ -50,10 +50,7 @@ app.get('/server', (req, res) => {
 app.use(express.static('public')); // Serve the React app from the "public" directory
 
 io.on('connection', (socket) => {
-  console.log('A user connected to the server');
-
   socket.on('reset', () => {
-    // Trigger the reset action on the client
     io.emit('resetClient');
   });
 });

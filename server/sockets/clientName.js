@@ -8,9 +8,14 @@ module.exports = (io) => {
 
         socket.on('clientName', (name) => {
             const id = socket.id
+            console.log(id)
             clientsData[id] = { name, score: 0 };
             console.log('New client connected:', clientsData);
             io.emit('update', { id, name });
+        })
+
+        socket.on('start', () => {
+            io.emit('get', clientsData)
         })
 
         socket.on('scoreUpdate', (score) => {
