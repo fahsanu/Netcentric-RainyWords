@@ -35,7 +35,7 @@ async function get_medium_words() {
 
         for (let ans = 0; ans< 100; ans++) {
             // console.log(words[ans].easy)
-            easy.push(words[ans].easy)
+            easy.push(words[ans].medium)
         }
 
         return easy;
@@ -56,7 +56,7 @@ async function get_hard_words() {
 
         for (let ans = 0; ans< 100; ans++) {
             // console.log(words[ans].easy)
-            easy.push(words[ans].easy)
+            easy.push(words[ans].hard)
         }
 
         return easy;

@@ -9,12 +9,16 @@
     <h1>Server Page</h1>
     <p>Only the server can access this page.</p>
     <button id="serverAction">Restart</button>
-    <p>Online clients: <span id="onlineClient">0</span></p>
+    <p>Easy Online clients: <span id="onlineEasyClient">0</span></p>
+    <p>Medium Online clients: <span id="onlineMediumClient">0</span></p>
+    <p>Hard Online clients: <span id="onlineHardClient">0</span></p>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const button = document.getElementById('serverAction');
-      const onlineClientCount = document.getElementById('onlineClient')
+      const onlineEasyClientCount = document.getElementById('onlineEasyClient')
+      const onlineMediumClientCount = document.getElementById('onlineMediumClient')
+      const onlineHardClientCount = document.getElementById('onlineHardClient')
     
       button.addEventListener('click', () => {
         const socket = io.connect('http://localhost:4000');
@@ -23,10 +27,10 @@
 
       const socket = io.connect('http://localhost:4000/welcomePage');
 
-  
-      socket.on('updateConnectedClients', (count) => {
-        onlineClientCount.textContent = count;
-        console.log(count);
+      socket.on('updateConnectedClients', (easy, medium, hard) => {
+        onlineEasyClientCount.textContent = easy;
+        onlineMediumClientCount.textContent = medium;
+        onlineHardClientCount.textContent = hard;
       });
 
     </script>
