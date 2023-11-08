@@ -13,6 +13,17 @@ export default function Home() {
     setUsername(event.target.value);
   };
 
+  const randomUsername = async () => {
+    try {
+      const response = await axios.get('http://172.20.10.12:4000/user/random');
+      const randomText = response.data.randomText;
+
+      setUsername(randomText);
+    } catch (error) {
+      console.error('Error fetching random text:', error);
+    }
+  };
+
   const socket = io("http://172.20.10.12:4000/", { transports : ['websocket'] });
 
   const handleSubmit = async () => {
@@ -47,13 +58,20 @@ export default function Home() {
             ></input>
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center pt-5 pb-10">
+        <div className="flex flex-row items-center justify-center pt-5 pb-10 ">
           <button
             className="px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
             type="button"
             onClick={handleSubmit}
           >
             <Link href="/welcomePage">ENTER</Link>
+          </button>
+          <button
+            className=" mx-10 px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
+            type="button"
+            onClick={randomUsername}
+          >
+            Random Name
           </button>
         </div>
       </div>
