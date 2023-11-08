@@ -43,22 +43,20 @@ export default function Leader() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">
-      <div className="w-full bg-slate-400"></div>
-      <div className="py-24 pt-[-10px] relative">
-        <button className="text-5xl left-20 py-12 px-20 absolute justify-right z-50 font-bold top-40 text-black">
-          <Link href="welcomePage">Play</Link>
-        </button>
-        <h2 className="text-5xl w-full absolute z-30 font-bold top-64 text-center text-black">
-          Leaderboard
+    <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400 dark:bg-slate-600">
+      <div className="w-screen flex justify-center pt-10">
+        <h1 className="absolute text-center text-stone-300 font-normal text-8xl pt-5 tracking-tighter font-outline-4 outline-black z-50">
+          Rainy Words
+        </h1>
+        <h2 className="col-start-2 text-5xl w-full absolute z-30 font-bold top-48 text-center text-black">
+          <Link href="welcomePage">Play Again</Link>
         </h2>
-        <div className="absolute z-50" style={{ right: 0, top: "28px" }}>
-          <button className="text-5xl right-20 py-12 px-20 absolute justify-right z-50 font-bold top-32 text-black">
-            <Link href="/">Exit</Link>
-          </button>
-        </div>
         <Threemek />
-        <div className="bg-slate-500 border-4 border-black relative px-24 py-20 w-full justify-center grid grid-cols-[0.5fr_3fr_1fr] gap-6 top-[-28px] z-0">
+      </div>
+      
+
+      <div className="flex flex-col items-center justify-center pt-20">
+        <div className="bg-slate-500 border-4 border-black relative px-24 py-20 w-10/12 justify-center grid grid-cols-[0.5fr_3fr_1fr] gap-6 top-[-28px] z-0">
           {/* Boxes for row 1 */}
           <div className="w-full h-30">
             <h1 className="text-8xl pb-4 font-bold font-outline-2 text-right text-stone-300">

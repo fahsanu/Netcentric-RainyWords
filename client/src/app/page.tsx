@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   return (
-    <div className="w-full h-full min-h-screen relative bg-slate-400">
+    <div className="w-full h-full min-h-screen relative bg-slate-400 dark:bg-slate-600">
       <div className="flex flex-wrap items-center justify-center">
         <h1 className="text-9xl text-center text-stone-300 font-outline-6 tracking-tighter pt-20">
           Rainy
@@ -47,8 +47,8 @@ export default function Home() {
         </h1>
       </div>
       <div className="flex flex-col items-center justify-center py-16">
-        <div className="w-2/3 border-2 border-black bg-slate-500">
-          <p className="text-center text-black text-4xl font-bold pt-20 pb-8">
+        <div className="w-2/3 border-2 border-black bg-slate-500 dark:bg-slate-700">
+          <p className="text-center text-black dark:text-stone-300 text-4xl font-bold pt-20 pb-8">
             Please enter your nickname
           </p>
           <div className="flex flex-col items-center justify-center pt-3 pb-20">
