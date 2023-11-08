@@ -128,6 +128,11 @@ export default function GamePage() {
     }
   }, [fallingWords]);
 
+  const stopGame = () => {
+    setIsPlaying(false);
+    setGameOver(true);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
     setInput(inputText);
@@ -146,6 +151,10 @@ export default function GamePage() {
         setScore(score + 1);
       }
     });
+
+    if (countdown === 0) {
+      stopGame(); // Stop the game if the countdown is 0
+    }
   };
 
   return (
@@ -197,6 +206,12 @@ export default function GamePage() {
             ))}
           </div>
         </div>
+        {gameOver && (
+        <div className="time-up-message">
+          <h2>Time's Up!</h2>
+          {/* Additional content or buttons for the time's up message */}
+        </div>
+      )}
 
         {/* INPUT */}
         <div className="relative -top-10">
