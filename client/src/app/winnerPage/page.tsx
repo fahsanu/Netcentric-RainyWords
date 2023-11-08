@@ -7,9 +7,9 @@ import Link from "next/link";
 
 export default function Winner() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400">
+    <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400 dark:bg-slate-600">
       <Confetti width={window.outerWidth} />
-      <div className="w-full bg-slate-400 py-">
+      <div className="w-full bg-slate-400 dark:bg-slate-600">
         <h1 className="text-9xl justify-center tracking-tighter font-bold pt-12 font-outline-2 top-24 text-center text-stone-300">
           RainyWords
         </h1>

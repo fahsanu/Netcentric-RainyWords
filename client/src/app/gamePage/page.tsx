@@ -165,7 +165,7 @@ export default function GamePage() {
   };
 
   return (
-    <div className="w-full h-full pb-24 min-h-screen justify-center relative bg-slate-400">
+    <div className="w-full h-full pb-24 min-h-screen justify-center relative bg-slate-400 dark:bg-slate-600">
       <div className="w-screen flex justify-center">
         <h1 className="absolute text-center text-stone-300 font-normal text-8xl pt-5 tracking-tighter font-outline-4 outline-black">
           Rainy Words
@@ -176,7 +176,7 @@ export default function GamePage() {
       </div>
 
       <div className="flex flex-col items-center justify-center">
-        <div className="relative block px-4 h-[55vh] overflow-hidden w-10/12 bg-slate-500 border-4 border-black pt-4">
+        <div className="relative block px-4 h-[55vh] overflow-hidden w-10/12 bg-slate-500 dark:bg-slate-700 border-4 border-black pt-4">
           <div className="flex justify-between">
             <h1 className="text-stone-300 text-3xl top-2 left-5">
               {player} : {playerScore}
@@ -202,8 +202,8 @@ export default function GamePage() {
                       initial={{ y: -100 * (wordIndex + 1) }}
                       animate={{ y: 1000 }}
                       exit={{ opacity: 0, y: 1000 }}
-                      transition={{ duration: 35 }}
-                      className="relative text-lg font-semibold text-white"
+                      transition={{ duration: 40 }}
+                      className="relative text-lg font-semibold text-stone-300"
                     >
                       {word}
                     </motion.div>
@@ -214,7 +214,7 @@ export default function GamePage() {
           </div>
 
           {gameOver && (
-            <div className="text-8xl text-stone-300 text-center item-center pt-10">
+            <div className="text-8xl text-stone-300 text-center item-center">
               <h2>Time's Up!</h2>
             </div>
           )}

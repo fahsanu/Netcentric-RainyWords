@@ -1,32 +1,31 @@
 export default function AboutUs() {
   return (
-    <div className="w-full h-full min-h-screen relative bg-slate-400">
-      <div className="flex flex-wrap items-center justify-center">
-        <h1 className="text-9xl text-center text-stone-300 font-outline-6 tracking-tighter pt-20">
-          Rainy
-        </h1>
-        <h1 className="text-9xl text-center text-stone-300 font-outline-6 tracking-tighter pt-20">
-          Words
+    <div className="w-full h-full min-h-screen relative bg-slate-400 dark:bg-slate-600">
+      <div className="text-center">
+        <h1 className="text-stone-300 text-8xl font-normal p-10 tracking-tighter font-outline-4 outline-black">
+          RainyWords
         </h1>
       </div>
-      <div className="text-center text-6xl text-black pt-10">
+      <div className="text-center text-6xl text-black dark:text-stone-300 pt-5">
         <h1>About Us</h1>
       </div>
-      <div className="text-center text-2xl text-black pt-5">
-        <p>We are Group 7</p>
+      <div className="flex flex-col items-center justify-center py-8">
+        <div className="w-2/3 border-2 border-black bg-slate-500 dark:bg-slate-700">
+          <div className="text-center text-3xl text-black dark:text-stone-300 pt-8">
+            <h1>Our Team</h1>
+          </div>
+          <div className="text-center text-2xl text-black dark:text-stone-300 pt-8 pb-8">
+            <p>Kanis Surajarus (UX/UI & Frontend)</p>
+            <p>Pann Klankasem (Backend)</p>
+            <p>Pitchapa Chaicharoen (Frontend)</p>
+            <p>Punpaporn Saardloun (Frontend)</p>
+            <p>Sasinapa Anugulsawad (Backend)</p>
+            <p>Chanakan Kunanantakul</p>
+          </div>
+        </div>
       </div>
-      <div className="text-center text-xl text-black pt-2">
-        <p>Team members:</p>
-      </div>
-      <div className="text-center text-2xl text-black pt-5">
-        <p>Kanis Surajarus (UX/UI & Frontend)</p>
-        <p>Pann Klankasem (Backend)</p>
-        <p>Pitchapa Chaicharoen (Frontend)</p>
-        <p>Punpaporn Saardloun (Frontend)</p>
-        <p>Sasinapa Anugulsawad (Backend)</p>
-        <p>Chanakan Kunanantakul</p>
-      </div>
-      <div className="text-center text-base text-black pt-10">
+
+      <div className="text-center text-base text-black dark:text-stone-300">
         <p>This project is part of 2190472 Netcentric Architecture AY1/2023</p>
         <p>Information and Communication Engineering</p>
         <p>International School of Engineering, Chulalongkorn University</p>
