@@ -78,12 +78,12 @@ export default function Home() {
       <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
         <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
           © 2023 Copyright :
-          <a
-            className="text-neutral-800 dark:text-neutral-900 mx-2"
-            href="https://tailwind-elements.com/"
+          <Link
+            className="text-neutral-800 dark:text-neutral-200 mx-2"
+            href="/aboutus"
           >
             Netcentric Project AY1/2023
-          </a>
+          </Link>
         </div>
       </footer>
     </div>

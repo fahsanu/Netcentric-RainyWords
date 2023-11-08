@@ -5,6 +5,7 @@ import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { io } from "socket.io-client";
+import Link from "next/link";
 
 export default function GamePage() {
   const router = useRouter();
@@ -241,12 +242,12 @@ export default function GamePage() {
       <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
         <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
           © 2023 Copyright :
-          <a
+          <Link
             className="text-neutral-800 dark:text-neutral-200 mx-2"
-            href="https://tailwind-elements.com/"
+            href="/aboutus"
           >
             Netcentric Project AY1/2023
-          </a>
+          </Link>
         </div>
       </footer>
     </div>
