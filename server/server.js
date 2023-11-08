@@ -37,10 +37,8 @@ app.get('/', (res) => {
 });
 
 const welcomePageSockets = require('./sockets/welcomePage')
-// const clientNameSockets = require('./sockets/clientName')
 
 welcomePageSockets(io);
-// clientNameSockets(io)
 
 //Server Side Page
 app.get('/server', (req, res) => {

@@ -14,7 +14,7 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(120); // 2 minutes
+  const [countdown, setCountdown] = useState(20); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
   const [run, setRun] = useState(true);
@@ -24,7 +24,6 @@ export default function GamePage() {
   //socket set up
   const socket = io('http://172.20.10.12:4000', { transports : ['websocket'] }); 
 
-  const [get, setGet] = useState(true)
   const [all, setAll] = useState<[
     {name: string, score: number},
     {name: string, score: number}
@@ -63,7 +62,6 @@ export default function GamePage() {
     setEnemy(all[1].name)
     setPlayerScore(all[0].score)
     setEnemyScore(all[1].score)
-    setGet(false)
     })
   })
 
@@ -128,6 +126,11 @@ export default function GamePage() {
     }
   }, [fallingWords]);
 
+  const stopGame = () => {
+    setIsPlaying(false);
+    setGameOver(true);
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
     setInput(inputText);
@@ -146,6 +149,10 @@ export default function GamePage() {
         setScore(score + 1);
       }
     });
+
+    if (countdown === 0) {
+      stopGame();
+    }
   };
 
   return (
@@ -186,7 +193,7 @@ export default function GamePage() {
                       initial={{ y: -100 * (wordIndex + 1) }}
                       animate={{ y: 1000 }}
                       exit={{ opacity: 0, y: 1000 }}
-                      transition={{ duration: 40 }}
+                      transition={{ duration: 35 }}
                       className="relative text-lg font-semibold text-white"
                     >
                       {word}
@@ -196,6 +203,12 @@ export default function GamePage() {
               </div>
             ))}
           </div>
+
+          {gameOver && (
+            <div className="text-center text-white text-8xl ">
+              <h2>Time's Up!</h2>
+            </div>
+          )}
         </div>
 
         {/* INPUT */}

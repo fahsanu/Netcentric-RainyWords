@@ -34,6 +34,25 @@ async function check_user(req) {
     }
 }
 
+async function random_name() {
+    try {
+        const database = client.db('usersDB');
+        const col = database.collection('random');
+
+        const random = await col.aggregate([{ $sample: { size: 1 }}]).toArray()
+        // console.log(random[0].name)
+        const ans = random[0].name
+
+        const del = await col.deleteOne({ name: ans })
+        console.log(del)
+
+        return ans
+    }  
+    catch (error) {
+        return { status: false, result: error}
+    }
+}
+
 async function add_score(req) {
     try {
         const database = client.db('usersDB');
@@ -84,4 +103,4 @@ async function get_top_three() {
     }
 }
 
-module.exports = { check_user, add_score, get_top_three }
+module.exports = { check_user, add_score, get_top_three, random_name }
