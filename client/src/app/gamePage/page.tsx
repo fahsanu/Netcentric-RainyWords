@@ -127,11 +127,6 @@ export default function GamePage() {
     }
   }, [fallingWords]);
 
-  const stopGame = () => {
-    setIsPlaying(false);
-    setGameOver(true);
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
     setInput(inputText);
@@ -154,10 +149,17 @@ export default function GamePage() {
 
     useEffect(() => {
       socket.on('sendUpdate', (player, otherPlayer) => {
-        setPlayerScore(player.score)
-        setEnemyScore(otherPlayer.score)
-      })
-    })
+        setPlayerScore(player.score);
+        setEnemyScore(otherPlayer.score);
+        console.log('player', player.score); // Log player's score
+        console.log('enemy', otherPlayer.score); // Log other player's score
+      });
+    }, [setPlayerScore, setEnemyScore]);
+    
+    const stopGame = () => {
+      setIsPlaying(false);
+      setGameOver(true);
+    };
 
     if (countdown === 0) {
       stopGame(); // Stop the game if the countdown is 0

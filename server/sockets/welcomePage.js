@@ -23,7 +23,6 @@ module.exports = (io, socket) => {
 
     const user = { id: socket.id, name: name.username, room, score: 0 };
     // console.log("user", user)
-
     // console.log('length', roomData[room].length)
 
     if (roomData[room].length < 2) {
@@ -40,10 +39,11 @@ module.exports = (io, socket) => {
 
   //pass date to game page
   socket.on("sendData", (room) => {
-    console.log(room, socket.id)
+    // console.log(room, socket.id)
     const player = roomData[room].find(item => item.id === socket.id)
     const otherPlayer = roomData[room].find(item => item.id !== socket.id)
-    // console.log('check', player)
+    // console.log('player', player)
+    // console.log('enemy', otherPlayer)
     io.emit('getPlayer', player);
     io.emit('getEnemy', otherPlayer)
   });
@@ -51,12 +51,14 @@ module.exports = (io, socket) => {
   socket.on("updateScore", (room) => {
     const player = roomData[room].find(item => item.id === socket.id)
     const otherPlayer = roomData[room].find(item => item.id !== socket.id)
-    player.score++
-    io.to(room).emit('sendUpdate', player, otherPlayer )
-    console.log(player.score)
+    if (player) {
+      player.score++
 
-    // Send updated room data to clients in the room
-    io.to(room).emit("updateRoomData", roomData[room]);
+      io.to(room).emit('sendUpdate', player, otherPlayer )
+      io.to(room).emit("updateRoomData", roomData[room]);
+
+      console.log("score", player.name, player.score)
+    }
   });
 
   socket.on("disconnect", () => {
