@@ -226,14 +226,14 @@ export default function GamePage() {
         </div>
 
         <div className="w-3/4 bg-stone-300 py-12 border-black rounded-lg border-4">
-          <h1 className="flex justify-center text-2xl text-black">
+          <h1 className="flex justify-center text-2xl text-black pb-5">
             How to play
           </h1>
-          <p className="flex justify-center text-black text-lg">
+          <p className="flex text-center justify-center text-black text-lg">
             Your task is to type words appearing on the screen before they have
             fallen down.
           </p>
-          <p className="flex justify-center text-black text-lg">
+          <p className="flex text-center justify-center text-black text-lg">
             Type the word and press Enter. Each correctly typed word or syllable
             gives you points.
           </p>
