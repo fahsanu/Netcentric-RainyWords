@@ -22,7 +22,7 @@ export default function GamePage() {
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
 
   //socket set up
-  const socket = io('http://172.20.10.12:4000', { transports : ['websocket'] }); 
+  const socket = io("http://172.20.10.12:4000", { transports: ["websocket"] });
 
   const [all, setAll] = useState<[
     {name: string, score: number},
@@ -67,18 +67,18 @@ export default function GamePage() {
 
   //reset game
   useEffect(() => {
-    socket.on('resetClient', () => {
-      window.location.href = '/';
+    socket.on("resetClient", () => {
+      window.location.href = "/";
     });
 
     return () => {
-      socket.disconnect(); 
+      socket.disconnect();
     };
   }, []);
 
   useEffect(() => {
     if (isPlaying) {
-      socket.emit('')
+      socket.emit("");
       const gameInterval = setInterval(() => {
         if (countdown > 0) {
           setCountdown((prevCountdown) => prevCountdown - 1);
@@ -129,7 +129,7 @@ export default function GamePage() {
   const stopGame = () => {
     setIsPlaying(false);
     setGameOver(true);
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
@@ -151,7 +151,7 @@ export default function GamePage() {
     });
 
     if (countdown === 0) {
-      stopGame();
+      stopGame(); // Stop the game if the countdown is 0
     }
   };
 
@@ -205,7 +205,7 @@ export default function GamePage() {
           </div>
 
           {gameOver && (
-            <div className="text-center text-white text-8xl ">
+            <div className="text-8xl text-stone-300 text-center item-center pt-20">
               <h2>Time's Up!</h2>
             </div>
           )}
@@ -224,14 +224,14 @@ export default function GamePage() {
         </div>
 
         <div className="w-3/4 bg-stone-300 py-12 border-black rounded-lg border-4">
-          <h1 className="flex justify-center text-2xl text-black">
+          <h1 className="flex justify-center text-2xl text-black pb-5">
             How to play
           </h1>
-          <p className="flex justify-center text-black text-lg">
+          <p className="flex text-center justify-center text-black text-lg">
             Your task is to type words appearing on the screen before they have
             fallen down.
           </p>
-          <p className="flex justify-center text-black text-lg">
+          <p className="flex text-center justify-center text-black text-lg">
             Type the word and press Enter. Each correctly typed word or syllable
             gives you points.
           </p>
