@@ -34,7 +34,7 @@ route.get('/random', async (req, res) => {
 route.get('/top_three', async (req, res) => {
     try {
         const _out = await get_top_three();
-        console.log(_out)
+        // console.log(_out)
         return res.status(200).json(_out);
     } catch(error) {
         return res.json({ status: false, message: "error" });

@@ -36,9 +36,7 @@ app.get('/', (res) => {
   res.sendFile(join(__dirname + 'page.tsx')); 
 });
 
-const welcomePageSockets = require('./sockets/welcomePage')
-
-
+const pageSockets = require('./sockets/socketPage')
 
 //Server Side Page
 app.get('/server', (req, res) => {
@@ -48,7 +46,7 @@ app.get('/server', (req, res) => {
 app.use(express.static('public')); // Serve the React app from the "public" directory
 
 io.on('connection', (socket) => {
-  welcomePageSockets(io, socket);
+  pageSockets(io, socket);
 
   socket.on('reset', () => {
     io.emit('resetClient');

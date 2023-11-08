@@ -1,13 +1,3 @@
-const connectedClients = 2;
- 
-const {
-  addUser,
-  removeUser,
-  getRoomData,
-  getUser,
-  getUsersInRoom,
-} = require("./users");
-
 const roomData = {
   easy: [],
   medium: [],
@@ -15,7 +5,6 @@ const roomData = {
 };
 
 module.exports = (io, socket) => {
-
 
   //add client to room
   socket.on("joinRoom", (room, name) => {
@@ -60,6 +49,16 @@ module.exports = (io, socket) => {
       console.log("score", player.name, player.score)
     }
   });
+
+  socket.on('isWinner', (room) => {
+    const user = roomData[room].find(item => item.id === socket.id)
+    const otherUser = roomData[room].find(item => item.id !== socket.id)
+    if (user.score > otherUser.score) {
+      socket.emit('check', true)
+    } else{
+      socket.emit('check', false)
+    }
+  })
 
   socket.on("disconnect", () => {
     const rooms = Object.keys(socket.rooms);

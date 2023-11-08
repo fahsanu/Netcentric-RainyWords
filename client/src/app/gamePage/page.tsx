@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
-import { io } from "socket.io-client";
 import { socket } from '../sockets/socket'
+import axios from "axios";
 
 export default function GamePage() {
   const router = useRouter();
@@ -15,21 +15,12 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(20); // 2 minutes
+  const [countdown, setCountdown] = useState(60); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
-  const [run, setRun] = useState(true);
 
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
 
- 
-  const [all, setAll] = useState<[
-    {name: string, score: number},
-    {name: string, score: number}
-  ]>([
-    {name: '', score:0},
-    {name:'', score:0}
-  ])
   const [player, setPlayer] = useState('')
   const [enemy, setEnemy] = useState('')
   const [playerScore, setPlayerScore] = useState(0)
@@ -63,6 +54,8 @@ export default function GamePage() {
       setEnemy(enemy.name)
       // setEnemyScore(enemy.score)
     })
+    console.log(player)
+    console.log(enemy)
   }, [])
 
   //reset game
@@ -79,7 +72,6 @@ export default function GamePage() {
 
   useEffect(() => {
     if (isPlaying) {
-      socket.emit("");
       const gameInterval = setInterval(() => {
         if (countdown > 0) {
           setCountdown((prevCountdown) => prevCountdown - 1);
@@ -87,6 +79,7 @@ export default function GamePage() {
           setIsPlaying(false); // Stop the game when time runs out
           clearInterval(gameInterval);
           setGameOver(true); // Display game over pop-up
+          router.push(`/scorePage?mode=${mode}`)
         }
       }, 1000);
 
@@ -127,6 +120,15 @@ export default function GamePage() {
     }
   }, [fallingWords]);
 
+  useEffect(() => {
+    socket.on('sendUpdate', (player, otherPlayer) => {
+      setPlayerScore(player.score);
+      setEnemyScore(otherPlayer.score);
+      console.log('player', player.score); // Log player's score
+      console.log('enemy', otherPlayer.score); // Log other player's score
+    });
+  }, [setPlayerScore, setEnemyScore]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
     setInput(inputText);
@@ -147,18 +149,19 @@ export default function GamePage() {
       }
     });
 
-    useEffect(() => {
-      socket.on('sendUpdate', (player, otherPlayer) => {
-        setPlayerScore(player.score);
-        setEnemyScore(otherPlayer.score);
-        console.log('player', player.score); // Log player's score
-        console.log('enemy', otherPlayer.score); // Log other player's score
-      });
-    }, [setPlayerScore, setEnemyScore]);
+  useEffect(() => {
+    try {
+      const response = axios.post(`http://172.20.10.12:4000/user/add_score`, { player, playerScore });
+      console.log(`username: ${player}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }, []);
     
     const stopGame = () => {
+      console.log('isitstop')
       setIsPlaying(false);
-      setGameOver(true);
+      setGameOver(true);      
     };
 
     if (countdown === 0) {
