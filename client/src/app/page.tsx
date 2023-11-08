@@ -16,7 +16,8 @@ export default function Home() {
   const randomUsername = async () => {
     try {
       const response = await axios.get('http://172.20.10.12:4000/user/random');
-      const randomText = response.data.randomText;
+      const randomText = response.data;
+      console.log(randomText)
 
       setUsername(randomText);
     } catch (error) {
@@ -24,12 +25,9 @@ export default function Home() {
     }
   };
 
-  const socket = io("http://172.20.10.12:4000/", { transports : ['websocket'] });
-
   const handleSubmit = async () => {
     try {
       const response = await axios.post('http://172.20.10.12:4000/user/check', { username });
-      socket.emit('clientName', username)
       console.log(`username: ${username}`)
     } catch (error) {
       console.log(error)

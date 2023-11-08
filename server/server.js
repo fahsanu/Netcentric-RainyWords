@@ -38,7 +38,7 @@ app.get('/', (res) => {
 
 const welcomePageSockets = require('./sockets/welcomePage')
 
-welcomePageSockets(io);
+
 
 //Server Side Page
 app.get('/server', (req, res) => {
@@ -48,6 +48,8 @@ app.get('/server', (req, res) => {
 app.use(express.static('public')); // Serve the React app from the "public" directory
 
 io.on('connection', (socket) => {
+  welcomePageSockets(io, socket);
+
   socket.on('reset', () => {
     io.emit('resetClient');
   });

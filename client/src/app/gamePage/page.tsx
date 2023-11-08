@@ -5,6 +5,7 @@ import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { io } from "socket.io-client";
+import { socket } from '../sockets/socket'
 
 export default function GamePage() {
   const router = useRouter();
@@ -21,9 +22,7 @@ export default function GamePage() {
 
   const [fallingWords, setFallingWords] = useState<string[][]>([[], [], []]);
 
-  //socket set up
-  const socket = io("http://172.20.10.12:4000", { transports: ["websocket"] });
-
+ 
   const [all, setAll] = useState<[
     {name: string, score: number},
     {name: string, score: number}
@@ -56,23 +55,25 @@ export default function GamePage() {
   //get data from socket
   useEffect(() => {
     socket.emit('sendData', mode)
-    socket.on('get', (ans) => {
-    setAll(ans)
-    setPlayer(all[0].name)
-    setEnemy(all[1].name)
-    setPlayerScore(all[0].score)
-    setEnemyScore(all[1].score)
+    socket.on('getPlayer', (player) => {
+      setPlayer(player.name)
+      // setPlayerScore(player.score)
     })
-  })
+    socket.on('getEnemy', (enemy) => {
+      setEnemy(enemy.name)
+      // setEnemyScore(enemy.score)
+    })
+  }, [])
 
   //reset game
   useEffect(() => {
-    socket.on("resetClient", () => {
-      window.location.href = "/";
+
+    socket.on('resetClient', () => {
+      window.location.href = '/';
     });
 
     return () => {
-      socket.disconnect();
+      socket.off('resetClient'); 
     };
   }, []);
 
@@ -147,8 +148,16 @@ export default function GamePage() {
         });
         setInput("");
         setScore(score + 1);
+        socket.emit('updateScore', mode)
       }
     });
+
+    useEffect(() => {
+      socket.on('sendUpdate', (player, otherPlayer) => {
+        setPlayerScore(player.score)
+        setEnemyScore(otherPlayer.score)
+      })
+    })
 
     if (countdown === 0) {
       stopGame(); // Stop the game if the countdown is 0
@@ -205,7 +214,7 @@ export default function GamePage() {
           </div>
 
           {gameOver && (
-            <div className="text-8xl text-stone-300 text-center item-center pt-20">
+            <div className="text-8xl text-stone-300 text-center item-center pt-10">
               <h2>Time's Up!</h2>
             </div>
           )}

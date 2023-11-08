@@ -4,6 +4,7 @@ import Button from "./button";
 import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
 import { useRouter } from "next/navigation";
+import { socket } from '../sockets/socket'
 
 const WelcomePage: React.FC = () => {
   const router = useRouter();
@@ -13,8 +14,6 @@ const WelcomePage: React.FC = () => {
   const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
 
-  const socket = io('http://172.20.10.12:4000', { transports : ['websocket'] }); 
-
   //reset game
   useEffect(() => {
 
@@ -23,7 +22,7 @@ const WelcomePage: React.FC = () => {
     });
 
     return () => {
-      socket.disconnect(); 
+      socket.off('resetClient'); 
     };
   }, []);
 
