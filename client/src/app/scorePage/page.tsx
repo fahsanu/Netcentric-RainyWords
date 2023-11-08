@@ -11,12 +11,17 @@ export default function scorePage() {
   const enemyScore = 8;
 
   useEffect(() => {
+    const delayRedirect = setTimeout(() => {
+      // Check scores and navigate to the appropriate page after 3 seconds
+      if (playerScore > enemyScore) {
+        router.push('/winnerPage'); // Navigate to winnerPage if the user's score is higher
+      } else {
+        router.push('/loserPage'); // Navigate to loserPage if the user's score is lower
+      }
+    }, 4000);
 
-    if (playerScore > enemyScore) {
-      router.push('/winnerPage');
-    } else {
-      router.push('/loserPage');
-    }
+    return () => clearTimeout(delayRedirect); // Clear the timeout if the component unmounts
+
   }, [playerScore, enemyScore, router]);
 
   return (
