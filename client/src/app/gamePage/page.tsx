@@ -14,7 +14,7 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(20); // 2 minutes
+  const [countdown, setCountdown] = useState(5); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
   const [run, setRun] = useState(true);
@@ -206,9 +206,8 @@ export default function GamePage() {
           </div>
 
           {gameOver && (
-            <div className="text-8xl text-white text-center">
+            <div className="text-8xl text-stone-300 text-center item-center pt-20">
               <h2>Time's Up!</h2>
-              {/* Additional content or buttons for the time's up message */}
             </div>
           )}
         </div>

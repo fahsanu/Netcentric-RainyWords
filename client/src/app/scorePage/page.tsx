@@ -1,12 +1,16 @@
 import Cloud from "./clouds";
 export default function scorePage() {
-    return (
-<div className="min-h-screen flex flex-col items-center justify-center bg-slate-400">
-      <h1 className="text-9xl font-bold pt-20 tracking-tighter pb-32 font-outline-4 top-28 text-center text-stone-300">
-        RainyWords
-        <div className="p-20"><Cloud/></div>
-      </h1>
+  return (
+    <div className="w-full min-h-screen bg-slate-400 flex justify-center items-center">
+      <div className="text-center">
+        <h1 className="text-stone-300 text-8xl font-normal p-10 tracking-tighter font-outline-4 outline-black">
+          RainyWords
+        </h1>
+
+        <div className="pt-10 pb-2">
+          <Cloud />
+        </div>
       </div>
+    </div>
   );
 }
-
