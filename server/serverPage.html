@@ -3,15 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Dela Gothic One' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <title>Server Page</title>
 </head>
+<style>
+  * {
+    background-color: #9FB1BC;
+  }
+
+  h1 {
+    font-family: 'Dela Gothic One';
+    font-size: 6rem;
+    text-align: center;
+    color: #D3D0CB;
+    -webkit-text-stroke: 6px black;
+  }
+
+  h2 {
+    font-family: 'Dela Gothic One';
+    font-size: 3rem;
+    text-align: center;
+    color: black;
+  }
+
+  p {
+    font-family: 'Poppins';
+  }
+
+  .server-description {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: -2rem;
+    margin-bottom: 1rem;
+  }
+
+  #serverAction {
+    align-items: center;
+    background-color: #D3D0CB;
+    font-family: 'Dela Gothic One';
+    font-size: 3rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border: 3px solid black;
+    position: relative;
+    display: flex;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  #serverAction:hover {
+    background-color: #E2C044;
+  }
+
+  .client {
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 0.75;
+    background-color: #6E8898;
+  }
+
+  .client-detail {
+    border: 2px solid black;
+    padding: 2rem;
+    width: 50%;
+    justify-content: center;
+    justify-items: center;
+    margin: auto;
+    background-color: #6E8898;
+  }
+
+  #onlineEasyClient, #onlineMediumClient, #onlineHardClient {
+    background-color: #6E8898;
+  }
+
+</style>
 <body>
-    <h1>Server Page</h1>
-    <p>Only the server can access this page.</p>
+    <h1>RainyWords</h1>
+    <h2>Server Page</h2>
+    <p class="server-description">Only the server can access this page.</p>
     <button id="serverAction">Restart</button>
-    <p>Easy Online clients: <span id="onlineEasyClient">0</span></p>
-    <p>Medium Online clients: <span id="onlineMediumClient">0</span></p>
-    <p>Hard Online clients: <span id="onlineHardClient">0</span></p>
+    <div class="client-detail">
+      <p class="client">Easy Online clients: <span id="onlineEasyClient">0</span></p>
+      <p class="client">Medium Online clients: <span id="onlineMediumClient">0</span></p>
+      <p class="client">Hard Online clients: <span id="onlineHardClient">0</span></p>
+    </div>
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
