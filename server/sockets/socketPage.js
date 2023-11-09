@@ -16,7 +16,7 @@ module.exports = (io, socket) => {
     const count = roomData[room].length;
     roomClientCounts[room] = count;
     console.log('roomClient', roomClientCounts)
-    io.emit('updateConnectedClients', roomClientCounts);
+    io.emit('updateConnectedClients', roomClientCounts, roomData);
   }
 
   //add client to room

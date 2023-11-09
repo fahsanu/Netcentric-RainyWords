@@ -121,11 +121,12 @@
         socket.emit("reset");
       });
 
-      socket.on("updateConnectedClients", (roomClientCounts) => {
+      socket.on("updateConnectedClients", (roomClientCounts, roomData) => {
         // Access the counts for each room from the roomClientCounts object
         onlineEasyClientCount.textContent = roomClientCounts.easy;
         onlineMediumClientCount.textContent = roomClientCounts.medium;
         onlineHardClientCount.textContent = roomClientCounts.hard;
+
       });
 
       socket.emit("update");
