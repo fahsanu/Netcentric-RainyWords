@@ -185,13 +185,13 @@ export default function GamePage() {
       <div className="flex flex-col items-center justify-center">
         <div className="relative block px-4 h-[55vh] overflow-hidden w-10/12 bg-slate-500 dark:bg-slate-700 border-4 border-black pt-4">
           <div className="flex justify-between">
-            <h1 className="text-stone-300 text-3xl top-2 left-5">
+            <h1 className="text-black dark:text-stone-300 underline underline-offset-4 text-3xl top-2 left-5">
               {player} : {playerScore}
             </h1>
-            <h1 className="text-stone-300 text-3xl top-2">
+            <h1 className="text-black dark:text-stone-300 text-3xl top-2">
               Time: {countdown} sec
             </h1>
-            <h1 className="text-stone-300 text-3xl top-2 right-5">
+            <h1 className="text-black dark:text-stone-300 text-3xl top-2 right-5">
               {enemy} : {enemyScore}
             </h1>
           </div>
@@ -210,7 +210,7 @@ export default function GamePage() {
                       animate={{ y: 1000 }}
                       exit={{ opacity: 0, y: 1000 }}
                       transition={{ duration: 40 }}
-                      className="relative text-lg font-semibold text-stone-300"
+                      className="relative text-lg font-semibold text-black dark:text-stone-300"
                     >
                       {word}
                     </motion.div>
