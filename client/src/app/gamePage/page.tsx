@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Cloud from "./components/cloud";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -27,7 +27,7 @@ export default function GamePage() {
   const [enemy, setEnemy] = useState('')
   const [playerScore, setPlayerScore] = useState(0)
   const [enemyScore, setEnemyScore] = useState(0)
-  const [easter, setEaster] = useState(true)
+  const easter = useRef(true)
 
   useEffect(() => {
     // let isRun = false;
@@ -153,7 +153,7 @@ export default function GamePage() {
         socket.emit('updateScore', mode,1)
       }
 
-      if (inputText=="malahunter" && easter) {
+      if (inputText=="malahunter" && easter.current) {
         setFallingWords((prevWords) => {
           const newWords = [...prevWords];
           newWords[index] = prevWords[index].filter(
@@ -161,7 +161,7 @@ export default function GamePage() {
           );
           return newWords;
         });
-        setEaster(false);
+        easter.current = false;
         setInput("");
         setScore(score + 1000);
         socket.emit('updateScore', mode,1000)
