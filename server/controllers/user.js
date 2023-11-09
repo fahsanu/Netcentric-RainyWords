@@ -57,17 +57,17 @@ async function add_score(req) {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
-        console.log('req', req.name, req.score)
+        // console.log('req', req.name, req.score)
 
         const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
-        console.log('player', existing_user)
+        // console.log('player', existing_user)
 
         if (req.score > existing_user.score) {
             const update_score = await col.updateOne(
                 { "name" : req.name },
                 { $set: { "score" : req.score } })
 
-            console.log('updated', update_score)
+            // console.log('updated', update_score)
             return { status: true, message: "Score updated successfully" };
             
         } else {
@@ -85,7 +85,7 @@ async function get_top_three() {
         const col = database.collection('user');
 
         const userCount = await col.countDocuments();
-        console.log(userCount)
+        // console.log(userCount)
 
         if (userCount < 3) {
             const top_users = await col.find({ score: { $exists: true } }).sort({ score: -1 }).toArray();

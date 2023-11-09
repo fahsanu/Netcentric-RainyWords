@@ -16,7 +16,7 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(120); // 2 minutes
+  const [countdown, setCountdown] = useState(300); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
 
@@ -180,15 +180,6 @@ export default function GamePage() {
         socket.emit('updateScore', mode,1000)
       }
     });
-
-  // useEffect(() => {
-  //   try {
-  //     const response = axios.post(`http://172.20.10.12:4000/user/add_score`, { player, score });
-  //     console.log(`username: ${player}`)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }, []);
     
     const stopGame = () => {
       console.log("isitstop");

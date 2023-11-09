@@ -30,10 +30,6 @@ export default function scorePage() {
 
   useEffect(() => {
     try {
-      console.log({
-        name: player,
-        score: playerScore // Use the player's final score
-      })
       fetch(`http://172.20.10.12:4000/user/add_score`, {
         method: 'PUT',
         headers: {

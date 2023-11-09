@@ -13,7 +13,6 @@ const WelcomePage: React.FC = () => {
   const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
   const [once, setOnce] = useState(true)
-  const track = "./bgsound.mp3";
 
   //reset game
   useEffect(() => {

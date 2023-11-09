@@ -8,7 +8,7 @@ async function get_easy_words() {
         const database = client.db('wordsDB');
         const col = database.collection('easy');
 
-        const words = await col.aggregate([ { $sample: { size: 100 } }, { $project: { _id: 0 } }]).toArray();
+        const words = await col.aggregate([ { $sample: { size: 1000 } }, { $project: { _id: 0 } }]).toArray();
 
         let easy = []
 
@@ -29,7 +29,7 @@ async function get_medium_words() {
         const database = client.db('wordsDB');
         const col = database.collection('medium');
 
-        const words = await col.aggregate([ { $sample: { size: 100 } }, { $project: { _id: 0 } }]).toArray();
+        const words = await col.aggregate([ { $sample: { size: 1000 } }, { $project: { _id: 0 } }]).toArray();
 
         let easy = []
 
@@ -50,7 +50,7 @@ async function get_hard_words() {
         const database = client.db('wordsDB');
         const col = database.collection('hard');
 
-        const words = await col.aggregate([ { $sample: { size: 100 } }, { $project: { _id: 0 } }]).toArray();
+        const words = await col.aggregate([ { $sample: { size: 1000 } }, { $project: { _id: 0 } }]).toArray();
 
         let easy = []
 

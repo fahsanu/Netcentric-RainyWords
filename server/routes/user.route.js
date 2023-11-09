@@ -13,9 +13,9 @@ route.post('/check', async (req, res) => {
 
 route.put('/add_score', async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         const _out = await add_score(req.body);
-        console.log('out', _out)
+        // console.log('out', _out)
         return res.json(_out);
     } catch(error) {
         return res.json({ status: false, message: "error" })
