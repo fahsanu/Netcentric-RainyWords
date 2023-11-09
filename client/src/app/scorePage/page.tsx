@@ -40,7 +40,7 @@ export default function scorePage() {
       } else {
         router.push('/loserPage'); // Navigate to loserPage if the user's score is lower
       }
-    }, 4000);
+    }, 4000000);
 
     return () => clearTimeout(delayRedirect); // Clear the timeout if the component unmounts
 
@@ -54,9 +54,9 @@ export default function scorePage() {
         </h1>
 
         <div className="pt-10 pb-2">
-          <h1>{player}: {playerScore}</h1>
-          <h1>{enemy}: {enemyScore}</h1>
-          <Cloud />
+          {/* <h1>{player}: {playerScore}</h1>
+          <h1>{enemy}: {enemyScore}</h1> */}
+          <Cloud player={player} playerScore={playerScore} enemy={enemy} enemyScore={enemyScore}/>
         </div>
       </div>
     </div>
