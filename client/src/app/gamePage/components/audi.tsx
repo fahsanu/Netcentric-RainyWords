@@ -15,6 +15,8 @@ const Player: React.FC<{ track: string }> = ({ track }) => {
     audio.addEventListener("ended", handleEnded);
     return () => {
       audio.removeEventListener("ended", handleEnded);
+      audio.pause();
+      audio.currentTime = 0;
     };
   }, [audio]);
 

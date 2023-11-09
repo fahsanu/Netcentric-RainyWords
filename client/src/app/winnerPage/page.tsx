@@ -6,6 +6,7 @@ import Youloose from "../loserPage/youloose";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { socket } from "../sockets/socket";
+import React from "react";
 
 export default function Winner() {
   const router = useRouter();

@@ -4,7 +4,6 @@ import Button from "./button";
 import { useUser } from "../UserInput/UserContext";
 import { useRouter } from "next/navigation";
 import { socket } from "../sockets/socket";
-import Player from "../components/player";
 
 const WelcomePage: React.FC = () => {
   const router = useRouter();
@@ -98,9 +97,6 @@ const WelcomePage: React.FC = () => {
   //main return
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400 dark:bg-slate-600">
-      <div className="absolute text-white text-left left-8 top-5">
-        <Player track={track} />
-      </div>
       <div className="flex flex-wrap items-center justify-center">
         <h1 className="text-9xl text-center text-stone-300 font-outline-6 tracking-tighter pt-20">
           Rainy
