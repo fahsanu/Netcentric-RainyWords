@@ -6,7 +6,7 @@ import { useUser } from "../UserInput/UserContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { socket } from "../sockets/socket";
-import Player from "./player";
+import Player from "../components/player";
 
 const WelcomePage: React.FC = () => {
   const router = useRouter();

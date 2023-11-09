@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import Link from "next/link";
 import { socket } from "../sockets/socket";
 import axios from "axios";
-import Player from "./components/player";
+import Player from "../components/player";
 
 export default function GamePage() {
   const router = useRouter();
