@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Button from "./button";
-import { io } from "socket.io-client";
 import { useUser } from "../UserInput/UserContext";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { socket } from "../sockets/socket";
 import Player from "../components/player";
 
@@ -15,6 +13,7 @@ const WelcomePage: React.FC = () => {
   const [mode, setMode] = useState<string>("");
   const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
+  const [once, setOnce] = useState(true)
   const track = "./bgsound.mp3";
 
   //reset game
@@ -28,12 +27,14 @@ const WelcomePage: React.FC = () => {
     };
   }, []);
 
-  const handleModeSelection = (selectedMode: string) => {
-    setMode(selectedMode);
-  };
-  const handleClick = (buttonId: number, mode: string) => {
-    setActive(buttonId);
-    console.log(mode);
+  const handleModeSelection = (buttonId: number, selectedMode: string) => {
+    if (once) {
+      setOnce(false)
+      setMode(selectedMode);
+      console.log(selectedMode)
+      setActive(buttonId);
+      console.log(mode);
+    }
   };
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const WelcomePage: React.FC = () => {
     if (connected) {
       setConnected(false);
       setWaiting(true);
+      socket.emit("joinRoom", mode, { username });
       console.log("Socket connected:", connected);
     }
   };
@@ -116,9 +118,7 @@ const WelcomePage: React.FC = () => {
         <div className="flex flex-wrap item-center justify-center py-10 space-x-10">
           <Button
             onClick={() => {
-              socket.emit("joinRoom", "easy", { username });
-              handleClick(1, "easy");
-              handleModeSelection("easy");
+              handleModeSelection(1, "easy");
             }}
             isActive={active === 1}
             mode="easy"
@@ -127,9 +127,7 @@ const WelcomePage: React.FC = () => {
           </Button>
           <Button
             onClick={() => {
-              socket.emit("joinRoom", "medium", { username });
-              handleClick(2, "medium");
-              handleModeSelection("medium");
+              handleModeSelection(2, "medium");
             }}
             isActive={active === 2}
             mode="medium"
@@ -138,9 +136,7 @@ const WelcomePage: React.FC = () => {
           </Button>
           <Button
             onClick={() => {
-              socket.emit("joinRoom", "hard", { username });
-              handleClick(3, "hard");
-              handleModeSelection("hard");
+              handleModeSelection(3, "hard");
             }}
             isActive={active === 3}
             mode="hard"

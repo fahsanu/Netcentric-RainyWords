@@ -21,6 +21,8 @@ module.exports = (io, socket) => {
 
   //add client to room
   socket.on("joinRoom", (room, name) => {
+    // console.log('room', room)
+    // console.log("name", name)
     socket.join(room);
 
     const user = { id: socket.id, name: name.username, room, score: 0 };
@@ -102,7 +104,7 @@ module.exports = (io, socket) => {
       medium: 0,
       hard: 0,
     };
-    // updateClientCounts(room);
+    io.emit('updateConnectedClients', roomClientCounts);
     console.log('roomData, roomClientCounts', roomData, roomClientCounts)
     io.emit('resetClient');
   });

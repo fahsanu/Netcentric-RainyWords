@@ -1,139 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Dela Gothic One' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Dela Gothic One"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
     <title>Server Page</title>
-</head>
-<style>
-  * {
-    background-color: #9FB1BC;
-  }
+  </head>
+  <style>
+    * {
+      background-color: #9fb1bc;
+    }
 
-  h1 {
-    font-family: 'Dela Gothic One';
-    font-size: 6rem;
-    text-align: center;
-    color: #D3D0CB;
-    -webkit-text-stroke: 6px black;
-  }
+    h1 {
+      font-family: "Dela Gothic One";
+      font-size: 6rem;
+      text-align: center;
+      color: #d3d0cb;
+      -webkit-text-stroke: 6px black;
+    }
 
-  h2 {
-    font-family: 'Dela Gothic One';
-    font-size: 3rem;
-    text-align: center;
-    color: black;
-  }
+    h2 {
+      font-family: "Dela Gothic One";
+      font-size: 3rem;
+      text-align: center;
+      color: black;
+    }
 
-  p {
-    font-family: 'Poppins';
-  }
+    p {
+      font-family: "Poppins";
+    }
 
-  .server-description {
-    text-align: center;
-    font-size: 1rem;
-    margin-top: -2rem;
-    margin-bottom: 1rem;
-  }
+    .server-description {
+      text-align: center;
+      font-size: 1rem;
+      margin-top: -2rem;
+      margin-bottom: 1rem;
+    }
 
-  #serverAction {
-    align-items: center;
-    background-color: #D3D0CB;
-    font-family: 'Dela Gothic One';
-    font-size: 3rem;
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    border: 3px solid black;
-    position: relative;
-    display: flex;
-    margin: auto;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-  }
+    #serverAction {
+      align-items: center;
+      background-color: #d3d0cb;
+      font-family: "Dela Gothic One";
+      font-size: 3rem;
+      padding-left: 5rem;
+      padding-right: 5rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      border: 3px solid black;
+      position: relative;
+      display: flex;
+      margin: auto;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
 
-  #serverAction:hover {
-    background-color: #E2C044;
-  }
+    #serverAction:hover {
+      background-color: #e2c044;
+    }
 
-  .client {
-    text-align: center;
-    font-size: 1.5rem;
-    line-height: 0.75;
-    background-color: #6E8898;
-  }
+    .client {
+      text-align: center;
+      font-size: 1.5rem;
+      line-height: 0.75;
+      background-color: #6e8898;
+    }
 
-  .client-detail {
-    border: 2px solid black;
-    padding: 2rem;
-    width: 50%;
-    justify-content: center;
-    justify-items: center;
-    margin: auto;
-    background-color: #6E8898;
-  }
+    .client-detail {
+      border: 2px solid black;
+      padding: 2rem;
+      width: 50%;
+      justify-content: center;
+      justify-items: center;
+      margin: auto;
+      background-color: #6e8898;
+    }
 
-  #onlineEasyClient, #onlineMediumClient, #onlineHardClient {
-    background-color: #6E8898;
-  }
-
-</style>
-<body>
+    #onlineEasyClient,
+    #onlineMediumClient,
+    #onlineHardClient {
+      background-color: #6e8898;
+    }
+  </style>
+  <body>
     <h1>RainyWords</h1>
     <h2>Server Page</h2>
     <p class="server-description">Only the server can access this page.</p>
     <button id="serverAction">Restart</button>
     <div class="client-detail">
-      <p class="client">Easy Online clients: <span id="onlineEasyClient">0</span></p>
-      <p class="client">Medium Online clients: <span id="onlineMediumClient">0</span></p>
-      <p class="client">Hard Online clients: <span id="onlineHardClient">0</span></p>
+      <p class="client">
+        Easy Online clients: <span id="onlineEasyClient">0</span>
+      </p>
+      <p class="client">
+        Medium Online clients: <span id="onlineMediumClient">0</span>
+      </p>
+      <p class="client">
+        Hard Online clients: <span id="onlineHardClient">0</span>
+      </p>
     </div>
-    
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const button = document.getElementById('serverAction');
+      const button = document.getElementById("serverAction");
 
-      const onlineEasyClientCount = document.getElementById('onlineEasyClient');
-      const onlineMediumClientCount = document.getElementById('onlineMediumClient');
-      const onlineHardClientCount = document.getElementById('onlineHardClient');
-      const roomDataContainer = document.getElementById('roomDataContainer');
-    
-      const socket = io('http://172.20.10.12:4000');
-    
-      button.addEventListener('click', () => {
-        console.log('serveraction')
-        socket.emit('reset');
+      const onlineEasyClientCount = document.getElementById("onlineEasyClient");
+      const onlineMediumClientCount =document.getElementById("onlineMediumClient");
+      const onlineHardClientCount = document.getElementById("onlineHardClient");
+      // const roomDataContainer = document.getElementById("roomDataContainer");
+
+      const socket = io("http://172.20.10.12:4000");
+
+      button.addEventListener("click", () => {
+        console.log("serveraction");
+        socket.emit("reset");
       });
-    
-      // Listen for updates on client counts in each room
 
-//       socket.on('updateConnectedClients', (easy, medium, hard) => {
-//       onlineEasyClientCount.textContent = easy;
-//       onlineMediumClientCount.textContent = medium;
-//       onlineHardClientCount.textContent = hard;
-// });
-socket.on('updateConnectedClients', (roomClientCounts) => {
-  // Access the counts for each room from the roomClientCounts object
-  onlineEasyClientCount.textContent = roomClientCounts.easy;
-  onlineMediumClientCount.textContent = roomClientCounts.medium;
-  onlineHardClientCount.textContent = roomClientCounts.hard;
-});
-    
-      // Listen for updates on room data (names and scores)
-      // socket.on('updateRoomData', (roomData) => {
-      //   roomDataContainer.innerHTML = '';
-      //   roomData.forEach((client, index) => {
-      //     const div = document.createElement('div');
-      //     div.innerHTML = `Player ${index + 1}: ${client.name} (Score: ${client.score})`;
-      //     roomDataContainer.appendChild(div);
-      //   });
-      // });
-    
-      socket.emit('update'); 
+      socket.on("updateConnectedClients", (roomClientCounts) => {
+        // Access the counts for each room from the roomClientCounts object
+        onlineEasyClientCount.textContent = roomClientCounts.easy;
+        onlineMediumClientCount.textContent = roomClientCounts.medium;
+        onlineHardClientCount.textContent = roomClientCounts.hard;
+      });
+
+      socket.emit("update");
     </script>
-    
-</body>
+  </body>
 </html>
