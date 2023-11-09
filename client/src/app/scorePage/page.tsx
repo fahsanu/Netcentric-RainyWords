@@ -29,10 +29,33 @@ export default function scorePage() {
   });
 
   useEffect(() => {
+    try {
+      console.log({
+        name: player,
+        score: playerScore // Use the player's final score
+      })
+      fetch(`http://172.20.10.12:4000/user/add_score`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: player,
+          score: playerScore // Use the player's final score
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {console.log(data);})
+        .catch((error) => {console.log(error);});
+    } catch (error) {
+      console.log(error);
+    }
+  }, [player, playerScore])
+
+  useEffect(() => {
     let delayRedirect:NodeJS.Timeout;
     socket.emit('isWinner', mode)
     socket.on('check', (r) => {setResult(r)
-    
     
       delayRedirect = setTimeout(() => {
         // Check scores and navigate to the appropriate page after 3 seconds

@@ -16,7 +16,7 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(20); // 2 minutes
+  const [countdown, setCountdown] = useState(120); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
 
@@ -97,25 +97,6 @@ export default function GamePage() {
           setIsPlaying(false); // Stop the game when time runs out
           clearInterval(gameInterval);
           setGameOver(true); // Display game over pop-up
-
-          try {
-            fetch(`http://172.20.10.12:4000/user/add_score`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                player,
-                score: playerScore, // Use the player's final score
-              }),
-            })
-              .then((response) => response.json())
-              .then((data) => {console.log(`username: ${player}`);})
-              .catch((error) => {console.log(error);});
-          } catch (error) {
-            console.log(error);
-          }
-
           router.push(`/scorePage?mode=${mode}`);
         }
       }, 1000);

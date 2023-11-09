@@ -59,7 +59,7 @@ async function add_score(req) {
         const col = database.collection('user');
         console.log('req', req.name, req.score)
 
-        const existing_user = await col.findOne({ name: req.player }, { projection: { _id: 0 } });
+        const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
         console.log('player', existing_user)
 
         if (req.score > existing_user.score) {
