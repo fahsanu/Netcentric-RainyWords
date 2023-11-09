@@ -27,6 +27,7 @@ export default function GamePage() {
   const [enemy, setEnemy] = useState('')
   const [playerScore, setPlayerScore] = useState(0)
   const [enemyScore, setEnemyScore] = useState(0)
+  var easter = true;
 
   useEffect(() => {
     // let isRun = false;
@@ -135,7 +136,7 @@ export default function GamePage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
     setInput(inputText);
-    var easter = true;
+  
 
     // check for similar words
     fallingWords.forEach((singularFallingWords, index) => {
