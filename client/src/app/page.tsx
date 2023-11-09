@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useUser } from "./UserInput/UserContext";
@@ -16,25 +16,27 @@ export default function Home() {
 
   const randomUsername = async () => {
     try {
-      const response = await axios.get('http://172.20.10.12:4000/user/random');
+      const response = await axios.get("http://172.20.10.12:4000/user/random");
       const randomText = response.data;
-      console.log(randomText)
+      console.log(randomText);
 
       setUsername(randomText);
     } catch (error) {
-      console.error('Error fetching random text:', error);
+      console.error("Error fetching random text:", error);
     }
   };
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://172.20.10.12:4000/user/check', { username });
-      console.log(`username: ${username}`)
-      router.push('/welcomePage')
+      const response = await axios.post("http://172.20.10.12:4000/user/check", {
+        username,
+      });
+      console.log(`username: ${username}`);
+      router.push("/welcomePage");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400 dark:bg-slate-600">
@@ -52,9 +54,10 @@ export default function Home() {
             Please enter your nickname
           </p>
           <div className="flex flex-col items-center justify-center pt-3 pb-20">
-            <input className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"
-            value={username}
-            onChange={handleUsernameChange}
+            <input
+              className="block w-3/4 p-6 text-center text-black border-4 border-black bg-zinc-300 sm:text-5xl focus:ring-black focus:border-black dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-black dark:focus:border-black"
+              value={username}
+              onChange={handleUsernameChange}
             ></input>
           </div>
         </div>

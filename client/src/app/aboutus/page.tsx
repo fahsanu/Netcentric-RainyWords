@@ -1,7 +1,7 @@
 import Link from "next/link";
+import React from "react";
 
 export default function AboutUs() {
-
   return (
     <div className="w-full h-full min-h-screen relative bg-slate-400 dark:bg-slate-600">
       <div className="text-center">
@@ -9,7 +9,7 @@ export default function AboutUs() {
           RainyWords
         </h1>
       </div>
-      
+
       <div className="flex flex-col items-center justify-center py-8">
         <div className="w-2/3 border-2 border-black bg-slate-500 dark:bg-slate-700">
           <div className="text-center text-3xl text-black dark:text-stone-300 pt-8">
@@ -33,11 +33,11 @@ export default function AboutUs() {
       </div>
 
       <div className="flex flex-row items-center justify-center pt-5 pb-10 ">
-          <Link
-            className="px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
-            href="/"
-          >
-            Back to Home
+        <Link
+          className="px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
+          href="/"
+        >
+          Back to Home
         </Link>
       </div>
 
