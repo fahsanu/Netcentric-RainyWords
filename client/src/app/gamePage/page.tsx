@@ -8,6 +8,7 @@ import { io } from "socket.io-client";
 import Link from "next/link";
 import { socket } from "../sockets/socket";
 import axios from "axios";
+import Player from "./components/player";
 
 export default function GamePage() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(60); // 2 minutes
+  const [countdown, setCountdown] = useState(120); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
 
@@ -27,6 +28,8 @@ export default function GamePage() {
   const [enemy, setEnemy] = useState("");
   const [playerScore, setPlayerScore] = useState(0);
   const [enemyScore, setEnemyScore] = useState(0);
+
+  const track = "./bgsound.mp3";
 
   useEffect(() => {
     // let isRun = false;
@@ -179,6 +182,9 @@ export default function GamePage() {
         <h1 className="absolute text-center text-stone-300 font-normal text-8xl pt-5 tracking-tighter font-outline-4 outline-black">
           Rainy Words
         </h1>
+        <div className="absolute text-white text-left left-8 top-5">
+          <Player track={track} />
+        </div>
         <div className="pt-10 pb-2">
           <Cloud />
         </div>
@@ -190,7 +196,7 @@ export default function GamePage() {
             <h1 className="text-black dark:text-stone-300 underline underline-offset-4 text-3xl top-2 left-5">
               {player} : {playerScore}
             </h1>
-            <h1 className="text-black dark:text-stone-300 text-3xl top-2">
+            <h1 className="text-black dark:text-stone-300 text-center text-3xl top-2">
               Time: {countdown} sec
             </h1>
             <h1 className="text-black dark:text-stone-300 text-3xl top-2 right-5">
@@ -249,18 +255,22 @@ export default function GamePage() {
             Type the word that apprears on the screen as fast as you can!
           </p>
           <p className="flex text-center justify-center text-black text-lg">
-            Each corrected word is worth 1 point, but there is some word that cost 100 points.
+            Each corrected word is worth 1 point, but there is some word that
+            cost 100 points.
           </p>
-          <p className="flex text-center justify-center text-black text-lg"> Good luck finding that {"><"}</p>
+          <p className="flex text-center justify-center text-black text-lg">
+            {" "}
+            Good luck finding that {"><"}
+          </p>
         </div>
       </div>
-      <div className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
+      <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
         <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
           <p className="text-neutral-800 dark:text-neutral-200 mx-2">
             © 2023 Copyright : Netcentric Project AY1/2023
           </p>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
