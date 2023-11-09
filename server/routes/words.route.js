@@ -4,7 +4,7 @@ const { get_easy_words, get_medium_words, get_hard_words } = require("../control
 route.get('/easy', async (req, res) => {
     try {
         const _out = await get_easy_words();
-        console.log(_out)
+        // console.log(_out)
         return res.json(_out);
     } catch(error) {
         return res.json(error);
@@ -14,7 +14,7 @@ route.get('/easy', async (req, res) => {
 route.get('/medium', async (req, res) => {
     try {
         const _out = await get_medium_words();
-        console.log(_out)
+        // console.log(_out)
         return res.json(_out);
     } catch(error) {
         return res.json(error);
@@ -24,7 +24,7 @@ route.get('/medium', async (req, res) => {
 route.get('/hard', async (req, res) => {
     try {
         const _out = await get_hard_words();
-        console.log(_out)
+        // console.log(_out)
         return res.json(_out);
     } catch(error) {
         return res.json(error);

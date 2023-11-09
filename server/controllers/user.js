@@ -8,26 +8,46 @@ async function check_user(req) {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
+        // console.log(req)
 
-        if (!req || !req.name) {
+        if (!req || !req.username) {
             return { status: false, message: "Require username"}
         }
 
-        const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
+        const existing_user = await col.findOne({ name: req.username }, { projection: { _id: 0 } });
 
         if (existing_user) {
-            return existing_user
+            return {status: true, result: existing_user}
         } else {
             const newUser = {
-                name: req.name,
+                name: req.username,
                 id: uuidv4(),
                 score: 0
             } 
         
         await col.insertOne(newUser);
-        return newUser;
+        return {result: true, result: newUser};
         };
     }
+    catch (error) {
+        return { status: false, result: error}
+    }
+}
+
+async function random_name() {
+    try {
+        const database = client.db('usersDB');
+        const col = database.collection('random');
+
+        const random = await col.aggregate([{ $sample: { size: 1 }}]).toArray()
+        // console.log(random[0].name)
+        const ans = random[0].name
+
+        const del = await col.deleteOne({ name: ans })
+        console.log(del)
+
+        return ans
+    }  
     catch (error) {
         return { status: false, result: error}
     }
@@ -37,23 +57,21 @@ async function add_score(req) {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
+        // console.log('req', req.name, req.score)
 
         const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
-        console.log(existing_user)
+        // console.log('player', existing_user)
 
-        if (existing_user) {
+        if (req.score > existing_user.score) {
             const update_score = await col.updateOne(
                 { "name" : req.name },
                 { $set: { "score" : req.score } })
 
-            if (update_score.modifiedCount === 1) {
-                return { status: true, message: "Score updated successfully" };
-            } else {
-                return { status: false, message: "Score update failed" };
-            }
+            // console.log('updated', update_score)
+            return { status: true, message: "Score updated successfully" };
             
         } else {
-            return { status: false, message: "Create the user first"}
+            return { status: false, message: "Not your best"}
         };
     }
     catch (error) {
@@ -67,7 +85,7 @@ async function get_top_three() {
         const col = database.collection('user');
 
         const userCount = await col.countDocuments();
-        console.log(userCount)
+        // console.log(userCount)
 
         if (userCount < 3) {
             const top_users = await col.find({ score: { $exists: true } }).sort({ score: -1 }).toArray();
@@ -83,4 +101,4 @@ async function get_top_three() {
     }
 }
 
-module.exports = { check_user, add_score, get_top_three }
+module.exports = { check_user, add_score, get_top_three, random_name }

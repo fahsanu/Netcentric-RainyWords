@@ -5,9 +5,14 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
 
+//API route -------------------------------------------------
 app.use(cors())
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
@@ -26,28 +31,29 @@ app.get('/api', (req, res) => {
 app.use('/words', words_routes)
 app.use('/user', user_routes);
 
+//Install middleware
+app.use(cors({ origin: 'http://localhost:3000' }));
+//Sockets -------------------------------------------------
+app.get('/', (res) => {
+  res.sendFile(join(__dirname + 'page.tsx')); 
+});
+
+const pageSockets = require('./sockets/socketPage')
+
+//Server Side Page
+app.get('/server', (req, res) => {
+  res.sendFile(__dirname + '/serverPage.html');
+});
+
+app.use(express.static('public')); // Serve the React app from the "public" directory
+
 io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  socket.on('message', (message) => {
-    console.log('Received message from client:', message);
-
-    io.emit('message', message);
-  });
-
-  socket.emit('message', 'Hello from the server!');
-
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-
+  pageSockets(io, socket);
 });
 
-const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-app.get('/client.js', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../client/client.js'));
+//Run Server -------------------------------------------------
+const PORT = 4000; 
+const SERVER_IP = "172.20.10.12"; //fahfhi's hotspot 172.20.10.12
+server.listen(PORT, SERVER_IP, () => {
+  console.log(`Server is running at http://${SERVER_IP}:${PORT}`);
 });
