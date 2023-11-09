@@ -18,7 +18,7 @@ export default function Leader() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/user/top_three"
+          "http://172.20.10.12:4000/user/top_three"
         );
         const userData = response.data;
 

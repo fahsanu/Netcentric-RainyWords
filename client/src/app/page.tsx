@@ -1,12 +1,13 @@
 'use client'
 import Link from "next/link";
 import React, { useState } from "react";
-import { io } from "socket.io-client";
 import { useUser } from "./UserInput/UserContext";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import axios from "axios";
+import { socket } from "./sockets/socket";
 
 export default function Home() {
+  const router = useRouter();
   const { username, setUsername } = useUser();
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,7 +17,8 @@ export default function Home() {
   const randomUsername = async () => {
     try {
       const response = await axios.get('http://172.20.10.12:4000/user/random');
-      const randomText = response.data.randomText;
+      const randomText = response.data;
+      console.log(randomText)
 
       setUsername(randomText);
     } catch (error) {
@@ -24,13 +26,11 @@ export default function Home() {
     }
   };
 
-  const socket = io("http://172.20.10.12:4000/", { transports : ['websocket'] });
-
   const handleSubmit = async () => {
     try {
       const response = await axios.post('http://172.20.10.12:4000/user/check', { username });
-      socket.emit('clientName', username)
       console.log(`username: ${username}`)
+      router.push('/welcomePage')
     } catch (error) {
       console.log(error)
     }
@@ -64,7 +64,7 @@ export default function Home() {
             type="button"
             onClick={handleSubmit}
           >
-            <Link href="/welcomePage">ENTER</Link>
+            ENTER
           </button>
           <button
             className=" mx-10 px-20 py-4 my-5 text-black text-4xl font-bold bg-stone-300 border-2 border-black hover:bg-amber-300"
