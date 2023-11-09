@@ -50,11 +50,11 @@ export default function GamePage() {
     socket.emit('sendData', mode)
     socket.on('getPlayer', (player) => {
       setPlayer(player.name)
-      // setPlayerScore(player.score)
+      setPlayerScore(player.score)
     })
     socket.on('getEnemy', (enemy) => {
       setEnemy(enemy.name)
-      // setEnemyScore(enemy.score)
+      setEnemyScore(enemy.score)
     })
     console.log(player)
     console.log(enemy)

@@ -39,14 +39,23 @@ module.exports = (io, socket) => {
 
   //pass date to game page
   socket.on("sendData", (room) => {
-    // console.log(room, socket.id)
-    const player = roomData[room].find(item => item.id === socket.id)
-    const otherPlayer = roomData[room].find(item => item.id !== socket.id)
-    // console.log('player', player)
-    // console.log('enemy', otherPlayer)
-    io.emit('getPlayer', player);
-    io.emit('getEnemy', otherPlayer)
+    updateScore(room)
   });
+
+  function updateScore(room){
+     // console.log(room, socket.id)
+     const player = roomData[room].find(item => item.id === socket.id)
+     const otherPlayer = roomData[room].find(item => item.id !== socket.id)
+     console.log('player', player)
+     console.log('enemy', otherPlayer)
+     io.to(player.id).emit('getPlayer', player);
+     io.to(player.id).emit('getEnemy', otherPlayer);
+ 
+     io.to(otherPlayer.id).emit('getPlayer', otherPlayer);
+ 
+     io.to(otherPlayer.id).emit('getEnemy', player);
+     // io.emit('getEnemy', otherPlayer)
+  }
 
   socket.on("updateScore", (room) => {
     const player = roomData[room].find(item => item.id === socket.id)
@@ -54,8 +63,7 @@ module.exports = (io, socket) => {
     if (player) {
       player.score++
 
-      io.to(room).emit('sendUpdate', player, otherPlayer )
-      io.to(room).emit("updateRoomData", roomData[room]);
+      updateScore(room)
 
       console.log("score", player.name, player.score)
     }
