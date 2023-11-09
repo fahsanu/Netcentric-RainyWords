@@ -135,6 +135,7 @@ export default function GamePage() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputText = e.target.value;
     setInput(inputText);
+    var easter = true;
 
     // check for similar words
     fallingWords.forEach((singularFallingWords, index) => {
@@ -148,7 +149,21 @@ export default function GamePage() {
         });
         setInput("");
         setScore(score + 1);
-        socket.emit('updateScore', mode)
+        socket.emit('updateScore', mode,1)
+      }
+
+      if (inputText=="malahunter" && easter) {
+        setFallingWords((prevWords) => {
+          const newWords = [...prevWords];
+          newWords[index] = prevWords[index].filter(
+            (word) => word !== inputText
+          );
+          return newWords;
+        });
+        easter = false;
+        setInput("");
+        setScore(score + 1000);
+        socket.emit('updateScore', mode,1000)
       }
     });
 

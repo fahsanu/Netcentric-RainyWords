@@ -48,11 +48,11 @@ module.exports = (io, socket) => {
     io.emit('getEnemy', otherPlayer)
   });
 
-  socket.on("updateScore", (room) => {
+  socket.on("updateScore", (room, score) => {
     const player = roomData[room].find(item => item.id === socket.id)
     const otherPlayer = roomData[room].find(item => item.id !== socket.id)
     if (player) {
-      player.score++
+      player.score+=score
 
       io.to(room).emit('sendUpdate', player, otherPlayer )
       io.to(room).emit("updateRoomData", roomData[room]);
