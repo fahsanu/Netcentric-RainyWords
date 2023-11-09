@@ -109,25 +109,30 @@
       });
     
       // Listen for updates on client counts in each room
-      socket.on('updateConnectedClients', (easy, medium, hard) => {
-      onlineEasyClientCount.textContent = easy;
-      onlineMediumClientCount.textContent = medium;
-      onlineHardClientCount.textContent = hard;
+
+//       socket.on('updateConnectedClients', (easy, medium, hard) => {
+//       onlineEasyClientCount.textContent = easy;
+//       onlineMediumClientCount.textContent = medium;
+//       onlineHardClientCount.textContent = hard;
+// });
+socket.on('updateConnectedClients', (roomClientCounts) => {
+  // Access the counts for each room from the roomClientCounts object
+  onlineEasyClientCount.textContent = roomClientCounts.easy;
+  onlineMediumClientCount.textContent = roomClientCounts.medium;
+  onlineHardClientCount.textContent = roomClientCounts.hard;
 });
     
       // Listen for updates on room data (names and scores)
-      socket.on('updateRoomData', (roomData) => {
-        roomDataContainer.innerHTML = '';
-        roomData.forEach((client, index) => {
-          const div = document.createElement('div');
-          div.innerHTML = `Player ${index + 1}: ${client.name} (Score: ${client.score})`;
-          roomDataContainer.appendChild(div);
-        });
-      });
+      // socket.on('updateRoomData', (roomData) => {
+      //   roomDataContainer.innerHTML = '';
+      //   roomData.forEach((client, index) => {
+      //     const div = document.createElement('div');
+      //     div.innerHTML = `Player ${index + 1}: ${client.name} (Score: ${client.score})`;
+      //     roomDataContainer.appendChild(div);
+      //   });
+      // });
     
-      // You may also want to initially request the client counts and room data from the server when the page loads
-      socket.emit('getConnectedClients'); // Modify your server code to respond to this event
-      socket.emit('getRoomData'); // Modify your server code to respond to this event
+      socket.emit('update'); 
     </script>
     
 </body>

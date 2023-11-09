@@ -57,19 +57,18 @@ async function add_score(req) {
     try {
         const database = client.db('usersDB');
         const col = database.collection('user');
-        console.log('req', req)
+        console.log('req', req.name, req.score)
 
-        const existing_user = await col.findOne({ name: req.name }, { projection: { _id: 0 } });
-        console.log(existing_user)
+        const existing_user = await col.findOne({ name: req.player }, { projection: { _id: 0 } });
+        console.log('player', existing_user)
 
         if (req.score > existing_user.score) {
             const update_score = await col.updateOne(
                 { "name" : req.name },
                 { $set: { "score" : req.score } })
 
-            if (update_score.modifiedCount === 1) {
-                return { status: true, message: "Score updated successfully" };
-            } 
+            console.log('updated', update_score)
+            return { status: true, message: "Score updated successfully" };
             
         } else {
             return { status: false, message: "Not your best"}

@@ -4,15 +4,19 @@ const roomData = {
   hard: [],
 };
 
-// function updateClientCounts(room) {
-//   const easyClients = roomData[room].filter((client) => client.room === room).length;
-//   const mediumClients = roomData[room].filter((client) => client.room === room).length;
-//   const hardClients = roomData[room].filter((client) => client.room === room).length;
-
-//   io.to(room).emit("updateConnectedClients", easyClients, mediumClients, hardClients);
-// }
+const roomClientCounts = {
+  easy: 0,
+  medium: 0,
+  hard: 0,
+};
 
 module.exports = (io, socket) => {
+  function updateClientCounts(room) {
+    const count = roomData[room].length;
+    roomClientCounts[room] = count;
+    console.log('roomClient', roomClientCounts)
+    io.emit('updateConnectedClients', roomClientCounts);
+  }
 
   //add client to room
   socket.on("joinRoom", (room, name) => {
@@ -27,14 +31,11 @@ module.exports = (io, socket) => {
       console.log("roomData", roomData);
     }
 
-    // io.to(room).emit("updateRoomData", roomData[room]);
-
     if (roomData[room].length === 2) {
       io.to(room).emit("startGame", room);
     }
 
-    // updateClientCounts(room);
-
+    updateClientCounts(room);
   });
 
   //pass date to game page
@@ -46,15 +47,13 @@ module.exports = (io, socket) => {
      // console.log(room, socket.id)
      const player = roomData[room].find(item => item.id === socket.id)
      const otherPlayer = roomData[room].find(item => item.id !== socket.id)
-     console.log('player', player)
-     console.log('enemy', otherPlayer)
+    //  console.log('player', player)
+    //  console.log('enemy', otherPlayer)
      io.to(player.id).emit('getPlayer', player);
      io.to(player.id).emit('getEnemy', otherPlayer);
  
      io.to(otherPlayer.id).emit('getPlayer', otherPlayer);
- 
      io.to(otherPlayer.id).emit('getEnemy', player);
-     // io.emit('getEnemy', otherPlayer)
   }
 
   socket.on("updateScore", (room,score) => {
@@ -81,8 +80,15 @@ module.exports = (io, socket) => {
     }
   })
 
+  socket.on('remove', (room) => {
+    console.log('already remove')
+    // console.log('roomData after removed', roomData)
+    updateClientCounts(room);
+  })
+
   socket.on('reset', () => {
     console.log('restart')
+    // while (roomData[room].length) { roomData[room].pop(); }
     io.emit('resetClient');
   });
 

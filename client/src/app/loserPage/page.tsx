@@ -1,11 +1,19 @@
 "use client";
+
 // import yay from "./assets/yay.wav";
 import Confetti from "react-confetti";
-import { useState } from "react";
 import Youloose from "./youloose";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { socket } from "../sockets/socket";
 
 export default function Loser() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get("mode");
+
+  socket.emit('remove', mode)
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400 dark:bg-slate-600">
       {/* <Confetti width={window.outerWidth} /> */}

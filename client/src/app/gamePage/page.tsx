@@ -83,6 +83,25 @@ export default function GamePage() {
           setIsPlaying(false); // Stop the game when time runs out
           clearInterval(gameInterval);
           setGameOver(true); // Display game over pop-up
+
+          try {
+            fetch(`http://172.20.10.12:4000/user/add_score`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                player,
+                score: playerScore, // Use the player's final score
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {console.log(`username: ${player}`);})
+              .catch((error) => {console.log(error);});
+          } catch (error) {
+            console.log(error);
+          }
+
           router.push(`/scorePage?mode=${mode}`);
         }
       }, 1000);
@@ -137,7 +156,6 @@ export default function GamePage() {
     const inputText = e.target.value;
     setInput(inputText);
   
-
     // check for similar words
     fallingWords.forEach((singularFallingWords, index) => {
       if (singularFallingWords.includes(inputText)) {
@@ -170,7 +188,7 @@ export default function GamePage() {
 
   // useEffect(() => {
   //   try {
-  //     const response = axios.post(`http://172.20.10.12:4000/user/add_score`, { player, playerScore });
+  //     const response = axios.post(`http://172.20.10.12:4000/user/add_score`, { player, score });
   //     console.log(`username: ${player}`)
   //   } catch (error) {
   //     console.log(error)

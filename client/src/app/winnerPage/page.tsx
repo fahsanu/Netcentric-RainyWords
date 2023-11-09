@@ -4,8 +4,16 @@ import Confetti from "react-confetti";
 import { useState } from "react";
 import Youloose from "../loserPage/youloose";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { socket } from "../sockets/socket";
 
 export default function Winner() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const mode = searchParams.get("mode");
+
+  socket.emit('remove', mode)
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400 dark:bg-slate-600">
       <Confetti width={window.outerWidth} />

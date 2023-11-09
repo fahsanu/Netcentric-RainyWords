@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
 
 //Run Server -------------------------------------------------
 const PORT = 4000; 
-const SERVER_IP = "localhost"; //fahfhi's hotspot 172.20.10.12
+const SERVER_IP = "172.20.10.12"; //fahfhi's hotspot 172.20.10.12
 server.listen(PORT, SERVER_IP, () => {
   console.log(`Server is running at http://${SERVER_IP}:${PORT}`);
 });

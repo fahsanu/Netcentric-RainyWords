@@ -37,14 +37,12 @@ export default function scorePage() {
       delayRedirect = setTimeout(() => {
         // Check scores and navigate to the appropriate page after 3 seconds
         if (result) {
-          router.push('/winnerPage'); // Navigate to winnerPage if the user's score is higher
+          router.push(`/winnerPage?mode=${mode}`); // Navigate to winnerPage if the user's score is higher
         } else {
-          router.push('/loserPage'); // Navigate to loserPage if the user's score is lower
+          router.push(`/loserPage?mode=${mode}`); // Navigate to loserPage if the user's score is lower
         }
       }, 4000);
-
     })
-   
 
     return () => {
       if (delayRedirect) clearTimeout(delayRedirect); // Clear the timeout if the component unmounts
