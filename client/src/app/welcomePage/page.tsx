@@ -157,13 +157,9 @@ const WelcomePage: React.FC = () => {
       </div>
       <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
         <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
-          © 2023 Copyright :
-          <Link
-            className="text-neutral-800 dark:text-neutral-200 mx-2"
-            href="/aboutus"
-          >
-            Netcentric Project AY1/2023
-          </Link>
+          <p className="text-neutral-800 dark:text-neutral-200 mx-2">
+            © 2023 Copyright : Netcentric Project AY1/2023
+          </p>
         </div>
       </footer>
     </div>

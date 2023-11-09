@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { io } from "socket.io-client";
 import Link from "next/link";
-import { socket } from '../sockets/socket'
+import { socket } from "../sockets/socket";
 import axios from "axios";
 
 export default function GamePage() {
@@ -70,7 +70,7 @@ export default function GamePage() {
     });
 
     return () => {
-      socket.off('resetClient'); 
+      socket.off("resetClient");
     };
   }, );
 
@@ -83,7 +83,7 @@ export default function GamePage() {
           setIsPlaying(false); // Stop the game when time runs out
           clearInterval(gameInterval);
           setGameOver(true); // Display game over pop-up
-          router.push(`/scorePage?mode=${mode}`)
+          router.push(`/scorePage?mode=${mode}`);
         }
       }, 1000);
 
@@ -125,11 +125,11 @@ export default function GamePage() {
   }, [fallingWords]);
 
   useEffect(() => {
-    socket.on('sendUpdate', (player, otherPlayer) => {
+    socket.on("sendUpdate", (player, otherPlayer) => {
       setPlayerScore(player.score);
       setEnemyScore(otherPlayer.score);
-      console.log('player', player.score); // Log player's score
-      console.log('enemy', otherPlayer.score); // Log other player's score
+      console.log("player", player.score); // Log player's score
+      console.log("enemy", otherPlayer.score); // Log other player's score
     });
   }, [setPlayerScore, setEnemyScore]);
 
@@ -178,9 +178,9 @@ export default function GamePage() {
   // }, []);
     
     const stopGame = () => {
-      console.log('isitstop')
+      console.log("isitstop");
       setIsPlaying(false);
-      setGameOver(true);      
+      setGameOver(true);
     };
 
     if (countdown === 0) {
@@ -261,26 +261,21 @@ export default function GamePage() {
             How to play
           </h1>
           <p className="flex text-center justify-center text-black text-lg">
-            Your task is to type words appearing on the screen before they have
-            fallen down.
+            Type the word that apprears on the screen as fast as you can!
           </p>
           <p className="flex text-center justify-center text-black text-lg">
-            Type the word and press Enter. Each correctly typed word or syllable
-            gives you points.
+            Each corrected word is worth 1 point, but there is some word that cost 100 points.
+          </p>
+          <p className="flex text-center justify-center text-black text-lg"> Good luck finding that {"><"}</p>
+        </div>
+      </div>
+      <div className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
+        <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
+          <p className="text-neutral-800 dark:text-neutral-200 mx-2">
+            © 2023 Copyright : Netcentric Project AY1/2023
           </p>
         </div>
       </div>
-      <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
-        <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
-          © 2023 Copyright :
-          <Link
-            className="text-neutral-800 dark:text-neutral-200 mx-2"
-            href="/aboutus"
-          >
-            Netcentric Project AY1/2023
-          </Link>
-        </div>
-      </footer>
     </div>
   );
 }
