@@ -31,20 +31,27 @@ export default function scorePage() {
   })
 
   useEffect(() => {
+    let delayRedirect:NodeJS.Timeout;
     socket.emit('isWinner', mode)
-    socket.on('check', (r) => {setResult(r)})
-    const delayRedirect = setTimeout(() => {
-      // Check scores and navigate to the appropriate page after 3 seconds
-      if (result) {
-        router.push('/winnerPage'); // Navigate to winnerPage if the user's score is higher
-      } else {
-        router.push('/loserPage'); // Navigate to loserPage if the user's score is lower
-      }
-    }, 4000);
+    socket.on('check', (r) => {setResult(r)
+    
+    
+      delayRedirect = setTimeout(() => {
+        // Check scores and navigate to the appropriate page after 3 seconds
+        if (result) {
+          router.push('/winnerPage'); // Navigate to winnerPage if the user's score is higher
+        } else {
+          router.push('/loserPage'); // Navigate to loserPage if the user's score is lower
+        }
+      }, 4000);
 
-    return () => clearTimeout(delayRedirect); // Clear the timeout if the component unmounts
+    })
+   
 
-  }, [playerScore, enemyScore, router]);
+    return () => {
+      if (delayRedirect) clearTimeout(delayRedirect); // Clear the timeout if the component unmounts
+    }
+  }, [playerScore, enemyScore, router, result]);
 
   return (
     <div className="w-full min-h-screen bg-slate-400 dark:bg-slate-600 flex justify-center items-center">

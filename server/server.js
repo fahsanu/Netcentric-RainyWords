@@ -8,9 +8,10 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://172.20.10.12:3000"
+    origin: "*"
   }
 });
+
 
 
 //API route -------------------------------------------------
@@ -29,8 +30,7 @@ app.use('/words', words_routes)
 app.use('/user', user_routes);
 
 //Install middleware
-// app.use(cors({ origin: 'http://localhost:3000' }));
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000' }));
 //Sockets -------------------------------------------------
 app.get('/', (res) => {
   res.sendFile(join(__dirname + 'page.tsx')); 
