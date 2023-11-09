@@ -71,8 +71,6 @@ export default function GamePage() {
       setEnemy(enemy.name)
       setEnemyScore(enemy.score)
     })
-    console.log(player)
-    console.log(enemy)
   }, [])
 
   //reset game

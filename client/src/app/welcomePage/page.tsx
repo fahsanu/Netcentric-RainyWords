@@ -31,7 +31,6 @@ const WelcomePage: React.FC = () => {
       setMode(selectedMode);
       console.log(selectedMode)
       setActive(buttonId);
-      console.log(mode);
     }
   };
 
