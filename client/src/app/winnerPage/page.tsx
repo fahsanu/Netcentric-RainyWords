@@ -4,6 +4,7 @@ import Confetti from "react-confetti";
 import { useState } from "react";
 import Youloose from "../loserPage/youloose";
 import Link from "next/link";
+import React from "react";
 
 export default function Winner() {
   return (

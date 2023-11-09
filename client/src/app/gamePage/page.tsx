@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 import Link from "next/link";
 import { socket } from "../sockets/socket";
 import axios from "axios";
-import Player from "../components/player";
+import Audi from "./components/audi";
 
 export default function GamePage() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function GamePage() {
   const [score, setScore] = useState(0);
   const [input, setInput] = useState("");
   const [isPlaying, setIsPlaying] = useState(true); // Start the game right away
-  const [countdown, setCountdown] = useState(120); // 2 minutes
+  const [countdown, setCountdown] = useState(20); // 2 minutes
   const [gameOver, setGameOver] = useState(false);
   const [words, setWords] = useState([]);
 
@@ -28,7 +28,6 @@ export default function GamePage() {
   const [enemy, setEnemy] = useState("");
   const [playerScore, setPlayerScore] = useState(0);
   const [enemyScore, setEnemyScore] = useState(0);
-
   const track = "./bgsound.mp3";
 
   const [showGif, setShowGif] = useState(false);
@@ -192,7 +191,7 @@ export default function GamePage() {
   return (
     <div className="w-full h-full pb-24 min-h-screen justify-center relative bg-slate-400 dark:bg-slate-600">
       <div className="absolute text-white text-left left-8 top-5">
-        <Player track={track} />
+        <Audi track={"./bgsound.mp3"} />
       </div>
       <div className="w-screen flex justify-center">
         <h1 className="absolute text-center text-stone-300 font-normal text-8xl pt-5 tracking-tighter font-outline-4 outline-black">
