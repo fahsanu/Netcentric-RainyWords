@@ -56,6 +56,7 @@ module.exports = (io, socket) => {
      io.to(otherPlayer.id).emit('getEnemy', player);
   }
 
+  //update real-rime score
   socket.on("updateScore", (room,score) => {
     const player = roomData[room].find(item => item.id === socket.id)
     const otherPlayer = roomData[room].find(item => item.id !== socket.id)
@@ -68,6 +69,7 @@ module.exports = (io, socket) => {
     }
   });
 
+  //check is it a winner to proceed to a different page
   socket.on('isWinner', (room) => {
     const user = roomData[room].find(item => item.id === socket.id)
     const otherUser = roomData[room].find(item => item.id !== socket.id)
