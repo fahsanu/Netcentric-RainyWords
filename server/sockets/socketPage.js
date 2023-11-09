@@ -11,6 +11,7 @@ const roomClientCounts = {
 };
 
 module.exports = (io, socket) => {
+
   function updateClientCounts(room) {
     const count = roomData[room].length;
     roomClientCounts[room] = count;
@@ -84,13 +85,25 @@ module.exports = (io, socket) => {
 
   socket.on('remove', (room) => {
     console.log('already remove')
+    while (roomData[room].length) { roomData[room].pop(); }
     // console.log('roomData after removed', roomData)
     updateClientCounts(room);
   })
 
   socket.on('reset', () => {
     console.log('restart')
-    // while (roomData[room].length) { roomData[room].pop(); }
+    const roomData = {
+      easy: [],
+      medium: [],
+      hard: [],
+    };
+    const roomClientCounts = {
+      easy: 0,
+      medium: 0,
+      hard: 0,
+    };
+    // updateClientCounts(room);
+    console.log('roomData, roomClientCounts', roomData, roomClientCounts)
     io.emit('resetClient');
   });
 
