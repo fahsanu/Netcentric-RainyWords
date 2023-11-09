@@ -27,7 +27,7 @@ export default function GamePage() {
   const [enemy, setEnemy] = useState('')
   const [playerScore, setPlayerScore] = useState(0)
   const [enemyScore, setEnemyScore] = useState(0)
-  var easter = true;
+  const [easter, setEaster] = useState(true)
 
   useEffect(() => {
     // let isRun = false;
@@ -161,7 +161,7 @@ export default function GamePage() {
           );
           return newWords;
         });
-        easter = false;
+        setEaster(false);
         setInput("");
         setScore(score + 1000);
         socket.emit('updateScore', mode,1000)
