@@ -211,7 +211,7 @@ export default function GamePage() {
                       animate={{ y: 1000 }}
                       exit={{ opacity: 0, y: 1000 }}
                       transition={{ duration: 40 }}
-                      className="relative text-lg font-semibold text-black dark:text-stone-300"
+                      className="relative text-lg font-mediym text-black dark:text-stone-300"
                     >
                       {word}
                     </motion.div>

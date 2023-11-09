@@ -64,6 +64,8 @@ module.exports = (io, socket) => {
   socket.on('isWinner', (room) => {
     const user = roomData[room].find(item => item.id === socket.id)
     const otherUser = roomData[room].find(item => item.id !== socket.id)
+    // console.log('user final score', user)
+    // console.log('other user final score', otherUser)
     if (user.score > otherUser.score) {
       socket.emit('check', true)
     } else{

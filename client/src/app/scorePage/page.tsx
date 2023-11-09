@@ -40,7 +40,7 @@ export default function scorePage() {
       } else {
         router.push('/loserPage'); // Navigate to loserPage if the user's score is lower
       }
-    }, 4000000);
+    }, 4000);
 
     return () => clearTimeout(delayRedirect); // Clear the timeout if the component unmounts
 
