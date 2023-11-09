@@ -43,13 +43,13 @@ export default function Leader() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start relative bg-slate-400 dark:bg-slate-600">
+    <div className="w-full h-full min-h-screen relative bg-slate-400 dark:bg-slate-600">
       <div className="w-screen flex justify-center pt-10">
         <h1 className="absolute text-center text-stone-300 font-normal text-8xl pt-5 tracking-tighter font-outline-4 outline-black z-50">
           Rainy Words
         </h1>
         <h2 className="col-start-2 text-5xl w-full absolute z-30 font-bold top-48 text-center text-black">
-          <Link href="welcomePage">Play Again</Link>
+          <Link href="/">Play Again</Link>
         </h2>
         <Threemek />
       </div>
@@ -109,6 +109,16 @@ export default function Leader() {
           </div>
         </div>
       </div>
+      <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
+        <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
+          <Link
+            className="text-neutral-800 dark:text-neutral-200 mx-2"
+            href="/aboutus"
+          >
+            © 2023 Copyright : Netcentric Project AY1/2023
+          </Link>
+        </div>
+      </footer>
     </div>
   );
 }
