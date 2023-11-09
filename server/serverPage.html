@@ -16,23 +16,25 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       const button = document.getElementById('serverAction');
+
       const onlineEasyClientCount = document.getElementById('onlineEasyClient');
       const onlineMediumClientCount = document.getElementById('onlineMediumClient');
       const onlineHardClientCount = document.getElementById('onlineHardClient');
       const roomDataContainer = document.getElementById('roomDataContainer');
     
-      const socket = io.connect('http://172.20.10.4:4000');
+      const socket = io('http://172.20.10.12:4000');
     
       button.addEventListener('click', () => {
+        console.log('serveraction')
         socket.emit('reset');
       });
     
       // Listen for updates on client counts in each room
       socket.on('updateConnectedClients', (easy, medium, hard) => {
-        onlineEasyClientCount.textContent = easy;
-        onlineMediumClientCount.textContent = medium;
-        onlineHardClientCount.textContent = hard;
-      });
+      onlineEasyClientCount.textContent = easy;
+      onlineMediumClientCount.textContent = medium;
+      onlineHardClientCount.textContent = hard;
+});
     
       // Listen for updates on room data (names and scores)
       socket.on('updateRoomData', (roomData) => {

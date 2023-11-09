@@ -62,13 +62,14 @@ export default function GamePage() {
   useEffect(() => {
 
     socket.on('resetClient', () => {
+      console.log('Reset event received on the client');
       window.location.href = '/';
     });
 
     return () => {
       socket.off('resetClient'); 
     };
-  }, []);
+  }, );
 
   useEffect(() => {
     if (isPlaying) {
@@ -149,14 +150,14 @@ export default function GamePage() {
       }
     });
 
-  useEffect(() => {
-    try {
-      const response = axios.post(`http://172.20.10.12:4000/user/add_score`, { player, playerScore });
-      console.log(`username: ${player}`)
-    } catch (error) {
-      console.log(error)
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const response = axios.post(`http://172.20.10.12:4000/user/add_score`, { player, playerScore });
+  //     console.log(`username: ${player}`)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }, []);
     
     const stopGame = () => {
       console.log('isitstop')

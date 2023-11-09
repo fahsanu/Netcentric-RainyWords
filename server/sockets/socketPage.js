@@ -4,6 +4,14 @@ const roomData = {
   hard: [],
 };
 
+// function updateClientCounts(room) {
+//   const easyClients = roomData[room].filter((client) => client.room === room).length;
+//   const mediumClients = roomData[room].filter((client) => client.room === room).length;
+//   const hardClients = roomData[room].filter((client) => client.room === room).length;
+
+//   io.to(room).emit("updateConnectedClients", easyClients, mediumClients, hardClients);
+// }
+
 module.exports = (io, socket) => {
 
   //add client to room
@@ -19,11 +27,14 @@ module.exports = (io, socket) => {
       console.log("roomData", roomData);
     }
 
-    io.to(room).emit("updateRoomData", roomData[room]);
+    // io.to(room).emit("updateRoomData", roomData[room]);
 
     if (roomData[room].length === 2) {
       io.to(room).emit("startGame", room);
     }
+
+    // updateClientCounts(room);
+
   });
 
   //pass date to game page
@@ -60,10 +71,17 @@ module.exports = (io, socket) => {
     }
   })
 
+  socket.on('reset', () => {
+    console.log('restart')
+    io.emit('resetClient');
+  });
+
   socket.on("disconnect", () => {
     const rooms = Object.keys(socket.rooms);
     rooms.forEach((room) => {
       socket.leave(room);
     });
+    // updateClientCounts(room);
+
   });
 };

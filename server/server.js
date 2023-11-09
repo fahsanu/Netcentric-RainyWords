@@ -47,10 +47,6 @@ app.use(express.static('public')); // Serve the React app from the "public" dire
 
 io.on('connection', (socket) => {
   pageSockets(io, socket);
-
-  socket.on('reset', () => {
-    io.emit('resetClient');
-  });
 });
 
 //Run Server -------------------------------------------------
