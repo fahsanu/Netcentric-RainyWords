@@ -31,6 +31,19 @@ export default function GamePage() {
 
   const track = "./bgsound.mp3";
 
+  const [showGif, setShowGif] = useState(false);
+  useEffect(() => {
+    const gifInterval = setInterval(() => {
+      setShowGif(true);
+      setTimeout(() => {
+        setShowGif(false);
+      }, 10000); // Adjust the duration as needed
+    }, 10000); // 10 seconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(gifInterval);
+  }, [showGif]);
+
   useEffect(() => {
     // let isRun = false;
     fetch(`http://172.20.10.12:4000/words/${mode}`, {
@@ -178,19 +191,21 @@ export default function GamePage() {
 
   return (
     <div className="w-full h-full pb-24 min-h-screen justify-center relative bg-slate-400 dark:bg-slate-600">
+      <div className="absolute text-white text-left left-8 top-5">
+        <Player track={track} />
+      </div>
       <div className="w-screen flex justify-center">
         <h1 className="absolute text-center text-stone-300 font-normal text-8xl pt-5 tracking-tighter font-outline-4 outline-black">
           Rainy Words
         </h1>
-        <div className="absolute text-white text-left left-8 top-5">
-          <Player track={track} />
-        </div>
+
         <div className="pt-10 pb-2">
           <Cloud />
         </div>
       </div>
 
       <div className="flex flex-col items-center justify-center">
+        {/* GAME */}
         <div className="relative block px-4 h-[55vh] overflow-hidden w-10/12 bg-slate-500 dark:bg-slate-700 border-4 border-black pt-4">
           <div className="flex justify-between">
             <h1 className="text-black dark:text-stone-300 underline underline-offset-4 text-3xl top-2 left-5">
@@ -236,18 +251,25 @@ export default function GamePage() {
         </div>
 
         {/* INPUT */}
-        <div className="relative -top-10">
+        <div className="relative -top-10 flex flex-row">
+          {showGif && (
+            <img src="/cheer.gif" alt="Cheer GIF" className="w-24 h-24" />
+          )}
           <input
             type="text"
             value={input}
             onChange={handleInputChange}
-            className="text-center block w-96 p-4 text-black border-4 border-cyan-900 rounded-lg bg-zinc-300 sm:text-xl focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="text-center block w-96 h-16 p-4 text-black border-4 border-cyan-900 rounded-lg bg-zinc-300 sm:text-xl focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Type Rainy Words Here..."
             disabled={!isPlaying || countdown === 0}
           />
+          {showGif && (
+            <img src="/cheer.gif" alt="Cheer GIF" className="w-24 h-24" />
+          )}
         </div>
 
-        <div className="w-3/4 bg-stone-300 py-12 border-black rounded-lg border-4">
+        {/* HOW TO PLAY */}
+        <div className="relative -top-8 w-3/4 bg-stone-300 py-6 border-black rounded-lg border-4">
           <h1 className="flex justify-center text-2xl text-black pb-5">
             How to play
           </h1>
@@ -264,6 +286,7 @@ export default function GamePage() {
           </p>
         </div>
       </div>
+
       <footer className="w-full fixed bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left bottom-0">
         <div className="p-4 text-center text-neutral-700 dark:text-neutral-200">
           <p className="text-neutral-800 dark:text-neutral-200 mx-2">
