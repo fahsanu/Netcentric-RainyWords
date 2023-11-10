@@ -12,7 +12,7 @@ const WelcomePage: React.FC = () => {
   const [mode, setMode] = useState<string>("");
   const [wating, setWaiting] = useState(false);
   const [connected, setConnected] = useState(true);
-  const [once, setOnce] = useState(true)
+  // const [once, setOnce] = useState(true)
 
   //reset game
   useEffect(() => {
@@ -26,12 +26,9 @@ const WelcomePage: React.FC = () => {
   }, []);
 
   const handleModeSelection = (buttonId: number, selectedMode: string) => {
-    if (once) {
-      setOnce(false)
       setMode(selectedMode);
       console.log(selectedMode)
       setActive(buttonId);
-    }
   };
 
   useEffect(() => {
