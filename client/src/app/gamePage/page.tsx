@@ -279,7 +279,7 @@ export default function GamePage() {
           </p>
           <p className="flex text-center justify-center text-black text-lg">
             Each corrected word is worth 1 point, but there is some word that
-            cost 100 points.
+            cost 1000 points.
           </p>
           <p className="flex text-center justify-center text-black text-lg">
             {" "}

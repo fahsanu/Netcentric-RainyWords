@@ -1,10 +1,10 @@
-const roomData = {
+var roomData = {
   easy: [],
   medium: [],
   hard: [],
 };
 
-const roomClientCounts = {
+var roomClientCounts = {
   easy: 0,
   medium: 0,
   hard: 0,
@@ -94,12 +94,12 @@ module.exports = (io, socket) => {
 
   socket.on('reset', () => {
     console.log('restart')
-    const roomData = {
+    roomData = {
       easy: [],
       medium: [],
       hard: [],
     };
-    const roomClientCounts = {
+    roomClientCounts = {
       easy: 0,
       medium: 0,
       hard: 0,
